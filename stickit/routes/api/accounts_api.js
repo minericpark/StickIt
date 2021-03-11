@@ -10,7 +10,6 @@ router.patch('/:id', (req, res) => {
     const newPassword = req.body.new_password;
 
     if (!foundAccount) return res.status(400).json({ msg: `No profile with the id of ${req.params.id}` });
-    if (!newPassword) return res.status(400).json({ msg: 'Please include a password' });
 
     foundAccount.password = newPassword;
 

@@ -1,4 +1,4 @@
-var accounts = [
+const accounts = [
     {
         user_id: 1,
         password: "fds@34sa#@"

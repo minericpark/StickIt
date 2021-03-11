@@ -8,18 +8,20 @@
     "@testing-library/user-event": "^12.8.1",
     "concurrently": "^6.0.0",
     "express": "^4.17.1",
+    "json-server": "^0.16.3",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.3",
     "web-vitals": "^1.1.0"
   },
   "scripts": {
-    "start-js": "react-scripts start",
+    "start-js": "node_modules/.bin/react-scripts start",
     "backend-start": "nodemon routes/api/backend",
-    "start": "concurrently \"npm-run-all -p backend-start start-js\"",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "db-start": "node_modules/.bin/json-server --watch routes/api/db.json",
+    "start": "node_modules/.bin/concurrently \\\\\\\"npm-run-all -p db-start backend-start start-js\\\\\\\"",
+    "build": "node_modules/.bin/react-scripts build",
+    "test": "node_modules/.bin/react-scripts test",
+    "eject": "node_modules/.bin/react-scripts eject"
   },
   "eslintConfig": {
     "extends": [

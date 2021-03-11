@@ -29,17 +29,17 @@ router.post('/', (req, res) => {
     res.json(profiles);
 });
 
+/**
+ * Consider optimizing this patch request later, so request would read the body properties
+ * and either replace or add them into the object in DB without using the object schema
+ */
 router.patch('/:id', (req, res) => {
     const newFirstName = req.body.first_name;
     const newLastName = req.body.last_name;
     const foundProfile = profiles.find(idFilter(req));
 
-    if (Object.keys(req.body).length === 0) return res.status(400).json({ msg: 'Please include a first or a last name' });
-    if (!newFirstName && !newLastName) return res.status(400).json({ msg: 'Please include a valid first and/ or last name'});
-
     if (!foundProfile) return res.status(400).json({ msg: `No profile with the id of ${req.params.id}` });
 
-    //This will be minimized into a function later if more properties are added to the profile object
     if (newFirstName) foundProfile.first_name = req.body.first_name;
     if (newLastName) foundProfile.last_name = req.body.last_name;
     res.status(200).json({

@@ -3,8 +3,13 @@ const profiles = require('../db/Profiles');
 
 const router = express.Router();
 
-const idFilter = req => profile => profile.user_id === parseInt(req.params.id);
+const idFilter = req => profile => profile.user_id === req.params.id;
 
+/*
+method: GET
+required parameters: id -> string
+response: 200 OK; 400 Error
+*/
 router.get('/:id', (req,res)=>{
     const found = profiles.some(idFilter(req));
     if (found) {
@@ -14,15 +19,21 @@ router.get('/:id', (req,res)=>{
       }
 });
 
+/*
+method: POST
+required parameters: none
+request body: user_id, first_name, last_name
+response: 200 OK; 400 Error
+*/
 router.post('/', (req, res) => {
     const profile = {
-        user_id: profiles.length + 1,
+        user_id: req.body.user_id,
         first_name: req.body.first_name,
         last_name: req.body.last_name
     };
 
-    if (!profile.first_name || !profile.last_name) {
-        return res.status(400).json({ msg: 'Please include a first and last name' });
+    if (!profile.first_name || !profile.last_name || !profile.user_id) {
+        return res.status(400).json({ msg: 'Please include a user_id, first name, last name' });
     }
 
     profiles.push(profile);

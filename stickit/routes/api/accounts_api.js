@@ -3,7 +3,7 @@ const accounts = require('../db/Accounts');
 
 const router = express.Router();
 
-const idFilter = req => account => account.user_id === parseInt(req.params.id);
+const idFilter = req => account => account.user_id === req.params.id;
 
 router.patch('/:id', (req, res) => {
     const foundAccount = accounts.find(idFilter(req));

@@ -5,9 +5,12 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { AppProvider } from './components/user_context';
 
+let userID = localStorage.getItem('userID');
+if (userID === 'null') userID = null;
+
 ReactDOM.render(
     <React.StrictMode>
-        <AppProvider>
+        <AppProvider userID={userID}>
             <App />
         </AppProvider>
     </React.StrictMode>,

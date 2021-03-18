@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { Redirect } from 'react-router-dom';
+import { Button, TextField, ButtonGroup } from '@material-ui/core';
 import { AppContext } from './user_context';
 
 function LoginPage() {
@@ -7,6 +8,7 @@ function LoginPage() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, toggleError] = useState({ email: false, password: false });
     const [errorMsg, setError] = useState('');
 
     function handleLogin(event) {
@@ -18,9 +20,13 @@ function LoginPage() {
         if (email.length === 0) {
             success = false;
             errMsg = 'Please enter your email';
+            toggleError({ email: true });
         } else if (password.length === 0) {
             success = false;
             errMsg = 'Please enter your password';
+            toggleError({ password: true });
+        } else {
+            toggleError({ email: false, password: false });
         }
 
         // TODO: submit the login information for confirmation
@@ -59,31 +65,34 @@ function LoginPage() {
         <div id="login-page" className="page">
             <form id="login-form" onSubmit={handleLogin}>
                 <h1 className="title">Log In</h1>
-                {errorMsg ? (
-                    <div className="error-message">
-                        {errorMsg}
-                        <br />
-                    </div>
-                ) : null}
-                <label htmlFor="email">Email:</label>
-                <br />
-                <input
-                    type="text"
+                <TextField
+                    label="Email"
                     name="email"
-                    placeholder="Email"
+                    type="email"
+                    size="small"
+                    margin="dense"
+                    variant="outlined"
+                    error={error.email}
+                    helperText={error.email ? errorMsg : null}
                     onChange={handleInput}
                 />
-                <br />
-                <label htmlFor="password">Password:</label>
-                <br />
-                <input
-                    type="password"
+                <TextField
+                    label="Password"
                     name="password"
-                    placeholder="Password"
+                    type="password"
+                    size="small"
+                    margin="dense"
+                    variant="outlined"
+                    error={error.password}
+                    helperText={error.password ? errorMsg : null}
                     onChange={handleInput}
                 />
-                <br />
-                <button type="submit">Log In</button>
+                <ButtonGroup size="small" variant="contained" disableElevation>
+                    {/* TODO: <Button color="default">Cancel</Button> */}
+                    <Button color="primary" type="submit">
+                        Log In
+                    </Button>
+                </ButtonGroup>
             </form>
         </div>
     );

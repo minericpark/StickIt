@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import { AppContext } from './user_context';
 
 function Dashboard() {
@@ -9,6 +9,11 @@ function Dashboard() {
     function logoutButtonClick() {
         logout();
         history.push('/');
+    }
+
+    // Attempting to navigate to dashboard without being logged in
+    if (userID === null) {
+        return <Redirect to="/" />;
     }
 
     return (

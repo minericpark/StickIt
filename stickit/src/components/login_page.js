@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import { AppContext } from './user_context';
 
 function LoginPage() {
     const history = useHistory();
-    const { login } = useContext(AppContext);
+    const { userID, login } = useContext(AppContext);
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -47,6 +47,11 @@ function LoginPage() {
         }
 
         setError(errMsg);
+    }
+
+    // Attempting to login while a user is already logged in
+    if (userID !== null) {
+        return <Redirect to="/dashboard" />;
     }
 
     return (

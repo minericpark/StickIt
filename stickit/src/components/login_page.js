@@ -56,7 +56,7 @@ function LoginPage() {
     }
 
     return (
-        <div id="login-page">
+        <div id="login-page" className="page">
             <form id="login-form" onSubmit={handleLogin}>
                 <h1 className="title">Log In</h1>
                 {errorMsg ? (

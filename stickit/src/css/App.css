@@ -1,14 +1,18 @@
 .error-message {
-    color: red
+    color: red;
 }
 .title {
     text-align: center;
 }
-
-#login-page {
+.page {
     padding: 60px 0;
 }
-#login-page form {
+
+#dashboard-page {
+    text-align: center;
+}
+
+#login-form {
     margin: auto;
     max-width: 175px;
     width: fit-content;
@@ -16,7 +20,7 @@
     padding: 0 15px 15px 15px;
     /* text-align: center; */
 }
-#login-page form button {
+#login-form button {
     margin: 5px auto;
     display: block;
 }

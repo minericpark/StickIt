@@ -1,5 +1,5 @@
 import './css/App.css';
-import { useState } from 'react';
+import { useContext, useEffect } from 'react';
 import {
     BrowserRouter as Router,
     Switch,
@@ -11,7 +11,11 @@ import LoginPage from './components/login_page';
 import { AppContext } from './components/user_context';
 
 function App() {
-    const [loggedIn, toggleLoggedIn] = useState(false);
+    const { userID } = useContext(AppContext);
+
+    useEffect(() => {
+        localStorage.setItem('userID', userID);
+    }, [userID]);
 
     return (
         <Router>
@@ -20,18 +24,14 @@ function App() {
                     <Dashboard />
                 </Route>
                 <Route exact path="/login">
-                    <LoginPage toggleLoggedIn={toggleLoggedIn} />
+                    <LoginPage />
                 </Route>
                 <Route exact path="/">
-                    <AppContext.Consumer>
-                        {(context) =>
-                            loggedIn && context.userID ? (
-                                <Redirect to="/dashboard" />
-                            ) : (
-                                <Redirect to="/login" />
-                            )
-                        }
-                    </AppContext.Consumer>
+                    {userID ? (
+                        <Redirect to="/dashboard" />
+                    ) : (
+                        <Redirect to="/login" />
+                    )}
                 </Route>
             </Switch>
         </Router>

@@ -1,18 +1,19 @@
+import { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { AppContext } from './user_context';
 
 function Dashboard() {
     const history = useHistory();
+    const { userID, logout } = useContext(AppContext);
 
     function logoutButtonClick() {
-        history.push('/login');
+        logout();
+        history.push('/');
     }
 
     return (
         <div>
-            <AppContext.Consumer>
-                {({ userID }) => <p>Welcome to your dashboard {userID}!!</p>}
-            </AppContext.Consumer>
+            <p>Welcome to your dashboard {userID}!!</p>
             <button onClick={logoutButtonClick}>Log Out</button>
         </div>
     );

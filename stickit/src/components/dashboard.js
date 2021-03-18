@@ -1,14 +1,12 @@
 import { useContext } from 'react';
-import { Redirect, useHistory } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { AppContext } from './user_context';
 
 function Dashboard() {
-    const history = useHistory();
     const { userID, logout } = useContext(AppContext);
 
     function logoutButtonClick() {
         logout();
-        history.push('/');
     }
 
     // Attempting to navigate to dashboard without being logged in

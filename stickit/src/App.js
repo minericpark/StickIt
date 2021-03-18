@@ -7,9 +7,10 @@ import {
 } from 'react-router-dom';
 import Dashboard from './components/dashboard';
 import LoginPage from './components/login_page';
+import { useState } from 'react';
 
 function App() {
-    let loggedIn = false;
+    const [loggedIn, toggleLoggedIn] = useState(false);
 
     return (
         <Router>
@@ -18,7 +19,7 @@ function App() {
                     <Dashboard />
                 </Route>
                 <Route exact path="/login">
-                    <LoginPage />
+                    <LoginPage toggleLoggedIn={toggleLoggedIn} />
                 </Route>
                 <Route exact path="/">
                     {loggedIn ? (

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-function LoginPage() {
+function LoginPage({ toggleLoggedIn }) {
     const history = useHistory();
 
     const [email, setEmail] = useState('');
@@ -21,8 +21,9 @@ function LoginPage() {
 
         // TODO: submit the login information for confirmation
 
+        toggleLoggedIn(success);
         if (success) {
-            history.push('/dashboard');
+            history.push('/');
         } else {
             setError(errMsg);
         }
@@ -31,6 +32,7 @@ function LoginPage() {
     function handleInput(event) {
         let name = event.target.name;
         let value = event.target.value;
+        let errMsg = '';
 
         if (name === 'email') {
             if (value.trim() !== '') {
@@ -41,39 +43,37 @@ function LoginPage() {
                 setPassword(value);
             }
         }
+
+        setError(errMsg);
     }
 
     return (
         <div id="login-page">
-            <h1>Log In</h1>
             <form id="login-form" onSubmit={handleLogin}>
+                <h1 className="title">Log In</h1>
                 {errorMsg ? (
                     <div className="error-message">
                         {errorMsg}
                         <br />
                     </div>
                 ) : null}
-                <label>
-                    Email:
-                    <br />
-                    <input
-                        type="text"
-                        name="email"
-                        placeholder="Email"
-                        onChange={handleInput}
-                    />
-                </label>
+                <label htmlFor="email">Email:</label>
                 <br />
-                <label>
-                    Password:
-                    <br />
-                    <input
-                        type="password"
-                        name="password"
-                        placeholder="Password"
-                        onChange={handleInput}
-                    />
-                </label>
+                <input
+                    type="text"
+                    name="email"
+                    placeholder="Email"
+                    onChange={handleInput}
+                />
+                <br />
+                <label htmlFor="password">Password:</label>
+                <br />
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                    onChange={handleInput}
+                />
                 <br />
                 <button type="submit">Log In</button>
             </form>

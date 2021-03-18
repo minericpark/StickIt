@@ -1,9 +1,8 @@
 import React, { useContext, useState } from 'react';
-import { Redirect, useHistory } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { AppContext } from './user_context';
 
 function LoginPage() {
-    const history = useHistory();
     const { userID, login } = useContext(AppContext);
 
     const [email, setEmail] = useState('');
@@ -16,16 +15,18 @@ function LoginPage() {
 
         event.preventDefault();
 
-        if (email.length === 0 || password.length === 0) {
+        if (email.length === 0) {
             success = false;
-            errMsg = 'Please enter your email and password';
+            errMsg = 'Please enter your email';
+        } else if (password.length === 0) {
+            success = false;
+            errMsg = 'Please enter your password';
         }
 
         // TODO: submit the login information for confirmation
 
         if (success) {
             login(email);
-            history.push('/');
         } else {
             setError(errMsg);
         }

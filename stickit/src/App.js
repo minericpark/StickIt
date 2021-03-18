@@ -30,6 +30,7 @@ function App() {
                     {userID ? (
                         <Redirect to="/dashboard" />
                     ) : (
+                        // TODO: change this to rendering the landing page
                         <Redirect to="/login" />
                     )}
                 </Route>

@@ -15,7 +15,7 @@ function Dashboard() {
     }
 
     return (
-        <div>
+        <div id="dashboard-page" className="page">
             <p>Welcome to your dashboard {userID}!!</p>
             <button onClick={logoutButtonClick}>Log Out</button>
         </div>

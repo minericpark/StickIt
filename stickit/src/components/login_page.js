@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { AppContext } from './user_context';
 
 function LoginPage({ toggleLoggedIn }) {
     const history = useHistory();
@@ -8,7 +9,7 @@ function LoginPage({ toggleLoggedIn }) {
     const [password, setPassword] = useState('');
     const [errorMsg, setError] = useState('');
 
-    function handleLogin(event) {
+    function handleLogin(event, context) {
         let success = true;
         let errMsg = '';
 
@@ -23,6 +24,7 @@ function LoginPage({ toggleLoggedIn }) {
 
         toggleLoggedIn(success);
         if (success) {
+            context.login(email);
             history.push('/');
         } else {
             setError(errMsg);
@@ -49,34 +51,41 @@ function LoginPage({ toggleLoggedIn }) {
 
     return (
         <div id="login-page">
-            <form id="login-form" onSubmit={handleLogin}>
-                <h1 className="title">Log In</h1>
-                {errorMsg ? (
-                    <div className="error-message">
-                        {errorMsg}
+            <AppContext.Consumer>
+                {(context) => (
+                    <form
+                        id="login-form"
+                        onSubmit={(e) => handleLogin(e, context)}
+                    >
+                        <h1 className="title">Log In</h1>
+                        {errorMsg ? (
+                            <div className="error-message">
+                                {errorMsg}
+                                <br />
+                            </div>
+                        ) : null}
+                        <label htmlFor="email">Email:</label>
                         <br />
-                    </div>
-                ) : null}
-                <label htmlFor="email">Email:</label>
-                <br />
-                <input
-                    type="text"
-                    name="email"
-                    placeholder="Email"
-                    onChange={handleInput}
-                />
-                <br />
-                <label htmlFor="password">Password:</label>
-                <br />
-                <input
-                    type="password"
-                    name="password"
-                    placeholder="Password"
-                    onChange={handleInput}
-                />
-                <br />
-                <button type="submit">Log In</button>
-            </form>
+                        <input
+                            type="text"
+                            name="email"
+                            placeholder="Email"
+                            onChange={handleInput}
+                        />
+                        <br />
+                        <label htmlFor="password">Password:</label>
+                        <br />
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder="Password"
+                            onChange={handleInput}
+                        />
+                        <br />
+                        <button type="submit">Log In</button>
+                    </form>
+                )}
+            </AppContext.Consumer>
         </div>
     );
 }

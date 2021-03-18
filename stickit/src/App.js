@@ -1,4 +1,5 @@
 import './css/App.css';
+import { useState } from 'react';
 import {
     BrowserRouter as Router,
     Switch,
@@ -7,7 +8,7 @@ import {
 } from 'react-router-dom';
 import Dashboard from './components/dashboard';
 import LoginPage from './components/login_page';
-import { useState } from 'react';
+import { AppContext } from './components/user_context';
 
 function App() {
     const [loggedIn, toggleLoggedIn] = useState(false);
@@ -22,11 +23,15 @@ function App() {
                     <LoginPage toggleLoggedIn={toggleLoggedIn} />
                 </Route>
                 <Route exact path="/">
-                    {loggedIn ? (
-                        <Redirect to="/dashboard" />
-                    ) : (
-                        <Redirect to="/login" />
-                    )}
+                    <AppContext.Consumer>
+                        {(context) =>
+                            loggedIn && context.userID ? (
+                                <Redirect to="/dashboard" />
+                            ) : (
+                                <Redirect to="/login" />
+                            )
+                        }
+                    </AppContext.Consumer>
                 </Route>
             </Switch>
         </Router>

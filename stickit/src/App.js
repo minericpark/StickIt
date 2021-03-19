@@ -6,7 +6,7 @@ import {
     Route,
     Redirect,
 } from 'react-router-dom';
-import Dashboard from './components/dashboard';
+import Dashboard from './components/dashboard_page';
 import LoginPage from './components/login_page';
 import { AppContext } from './components/user_context';
 import MenuBar from "./components/menu_bar";

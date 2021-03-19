@@ -9,12 +9,19 @@
 }
 
 #menubar-navicon {
-    color: white
+    color: white;
 }
 
 #menubar-title {
     flex-grow: 1;
     text-align: center;
+}
+.sticky-board-card {
+    padding: 5px;
+    text-align: center;
+}
+.grid {
+    padding: 15px;
 }
 
 #dashboard-page {

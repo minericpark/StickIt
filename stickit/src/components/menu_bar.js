@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react';
-import {Link, useLocation} from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Drawer, List, ListItem, ListItemText, ListItemIcon, Divider,
     AppBar, Toolbar, IconButton, Typography } from '@material-ui/core';
 import { AppContext } from './user_context';
-import {Menu, ExitToApp} from '@material-ui/icons';
+import { Menu, ExitToApp } from '@material-ui/icons';
 
 function MenuBar() {
     const location = useLocation();
@@ -12,12 +12,12 @@ function MenuBar() {
         open: false,
     });
 
-    //Get location of current page / route
-
     function logoutButtonClick() {
         logout();
     }
 
+    // Get's the route pathname and changes it into a presentable title
+    // **This is currently pretty unsafe
     function getPageName(routeName) {
         if (!routeName || routeName === '/') return '';
         return routeName.charAt(1).toUpperCase() + routeName.slice(2);
@@ -35,7 +35,6 @@ function MenuBar() {
         }
     ]
 
-    // Toggles open drawer
     const toggleDrawer = (open) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
             return;
@@ -44,7 +43,7 @@ function MenuBar() {
         setDrawerState({ ...drawerState, 'open': open });
     };
 
-    // Generates all the drawer contents
+    // All the drawer contents
     const drawerComponents = () => (
         <div
             role="presentation"

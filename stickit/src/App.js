@@ -21,7 +21,7 @@ function App() {
 
     return (
         <Router>
-            { userID != null? <MenuBar /> : null}
+            { userID ? <MenuBar /> : null}
             <Switch>
                 <Route exact path="/test" component={TestPage}/>
                 <Route exact path="/dashboard" component={Dashboard}/>

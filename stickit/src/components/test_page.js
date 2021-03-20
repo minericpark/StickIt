@@ -2,10 +2,10 @@ import React, {useContext} from "react";
 import {Redirect} from "react-router-dom";
 import {AppContext} from "./user_context";
 
+//Just a test page for navigation testing with the menu bar
 function TestPage() {
     const { userID } = useContext(AppContext);
 
-    // Attempting to navigate to testpage without being logged in
     if (userID === null) {
         return <Redirect to="/" />;
     }

@@ -12,12 +12,17 @@ function LoginPage() {
     const [error, toggleError] = useState({ email: false, password: false });
     const [errorMsg, setError] = useState('');
 
+    /** Handle login submission.
+     *
+     * @param {*} event - the submit event
+     */
     function handleLogin(event) {
         let success = true;
         let errMsg = '';
 
         event.preventDefault();
 
+        // Ensure email and password are not empty strings
         if (email.length === 0) {
             success = false;
             errMsg = 'Please enter your email';
@@ -35,6 +40,7 @@ function LoginPage() {
             return;
         }
 
+        // Send login request
         axios
             .get('http://localhost:5000/accounts/login', {
                 params: { email: email, password: password },
@@ -61,6 +67,10 @@ function LoginPage() {
             });
     }
 
+    /** Handle input from text fields and do some simple validation.
+     *
+     * @param {*} event - then text changed event
+     */
     function handleInput(event) {
         let name = event.target.name;
         let value = event.target.value;
@@ -69,10 +79,16 @@ function LoginPage() {
         if (name === 'email') {
             if (value.trim() !== '') {
                 setEmail(value);
+            } else {
+                toggleError({ email: true });
+                setError('Enter an email');
             }
         } else if (name === 'password') {
             if (value.trim() !== '') {
                 setPassword(value);
+            } else {
+                toggleError({ password: true });
+                setError('Enter password');
             }
         }
 

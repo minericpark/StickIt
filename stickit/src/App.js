@@ -1,5 +1,5 @@
 import './css/App.css';
-import { useContext, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import {
     BrowserRouter as Router,
     Switch,
@@ -9,6 +9,8 @@ import {
 import Dashboard from './components/dashboard';
 import LoginPage from './components/login_page';
 import { AppContext } from './components/user_context';
+import MenuBar from "./components/menu_bar";
+import TestPage from "./components/test_page";
 
 function App() {
     const { userID } = useContext(AppContext);
@@ -20,8 +22,11 @@ function App() {
     return (
         <Router>
             <Switch>
+                <Route exact path="/test">
+                    <MenuBar withPage={<TestPage/>} />
+                </Route>
                 <Route exact path="/dashboard">
-                    <Dashboard />
+                    <MenuBar withPage={<Dashboard/>} />
                 </Route>
                 <Route exact path="/login">
                     <LoginPage />

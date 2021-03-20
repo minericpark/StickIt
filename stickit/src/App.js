@@ -21,16 +21,11 @@ function App() {
 
     return (
         <Router>
+            { userID != null? <MenuBar /> : null}
             <Switch>
-                <Route exact path="/test">
-                    <MenuBar withPage={<TestPage/>} />
-                </Route>
-                <Route exact path="/dashboard">
-                    <MenuBar withPage={<Dashboard/>} />
-                </Route>
-                <Route exact path="/login">
-                    <LoginPage />
-                </Route>
+                <Route exact path="/test" component={TestPage}/>
+                <Route exact path="/dashboard" component={Dashboard}/>
+                <Route exact path="/login" component={LoginPage}/>
                 <Route exact path="/">
                     {userID ? (
                         <Redirect to="/dashboard" />

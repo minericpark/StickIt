@@ -1,23 +1,26 @@
 import React, { useContext, useState } from 'react';
-import {Link, Redirect} from 'react-router-dom';
-import { Button, Drawer, List, ListItem, ListItemText, ListItemIcon, Divider } from '@material-ui/core';
+import {Link, useLocation} from 'react-router-dom';
+import { Drawer, List, ListItem, ListItemText, ListItemIcon, Divider,
+    AppBar, Toolbar, IconButton, Typography } from '@material-ui/core';
 import { AppContext } from './user_context';
 import {Menu, ExitToApp} from '@material-ui/icons';
 
-function MenuBar(props) {
-    const { withPage } = props;
-    const { logout, userID } = useContext(AppContext);
+function MenuBar() {
+    const location = useLocation();
+    const { logout } = useContext(AppContext);
     const [drawerState, setDrawerState] = useState({
         open: false,
     });
 
-    // Attempting to navigate to a page without being logged in
-    if (userID === null) {
-        return <Redirect to="/" />;
-    }
+    //Get location of current page / route
 
     function logoutButtonClick() {
         logout();
+    }
+
+    function getPageName(routeName) {
+        if (!routeName || routeName === '/') return '';
+        return routeName.charAt(1).toUpperCase() + routeName.slice(2);
     }
 
     // Array of drawer content
@@ -66,20 +69,22 @@ function MenuBar(props) {
         </div>
     );
 
-    //Track title of current page / view
-    //Provide navigation to other pages
-    //Provide logout option
-
     return (
         <div>
             <React.Fragment>
-                <Button onClick={toggleDrawer(true)}>
-                    <Menu />
-                </Button>
+                <AppBar>
+                    <Toolbar>
+                        <IconButton edge="start" onClick={toggleDrawer(true)}>
+                            <Menu id="menubar-navicon"/>
+                        </IconButton>
+                        <Typography id="menubar-title" variant="h6">
+                            {getPageName(location.pathname)}
+                        </Typography>
+                    </Toolbar>
+                </AppBar>
                 <Drawer anchor={'left'} open={drawerState['open']} onClose={toggleDrawer(false)}>
                     {drawerComponents()}
                 </Drawer>
-                {withPage}
             </React.Fragment>
         </div>
     );

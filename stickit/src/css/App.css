@@ -1,0 +1,22 @@
+.error-message {
+    color: red;
+}
+.title {
+    text-align: center;
+}
+.page {
+    padding: 60px 0;
+}
+
+#dashboard-page {
+    text-align: center;
+}
+
+#login-form {
+    margin: auto;
+    max-width: 200px;
+    width: fit-content;
+    border: 3px solid black;
+    padding: 0 15px 15px 15px;
+    text-align: center;
+}

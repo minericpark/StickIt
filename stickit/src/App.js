@@ -1,25 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import './css/App.css';
+import { useContext, useEffect } from 'react';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Redirect,
+} from 'react-router-dom';
+import Dashboard from './components/dashboard';
+import LoginPage from './components/login_page';
+import { AppContext } from './components/user_context';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const { userID } = useContext(AppContext);
+
+    useEffect(() => {
+        localStorage.setItem('userID', userID);
+    }, [userID]);
+
+    return (
+        <Router>
+            <Switch>
+                <Route exact path="/dashboard">
+                    <Dashboard />
+                </Route>
+                <Route exact path="/login">
+                    <LoginPage />
+                </Route>
+                <Route exact path="/">
+                    {userID ? (
+                        <Redirect to="/dashboard" />
+                    ) : (
+                        // TODO: change this to rendering the landing page
+                        <Redirect to="/login" />
+                    )}
+                </Route>
+            </Switch>
+        </Router>
+    );
 }
 
 export default App;

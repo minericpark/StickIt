@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Button, TextField, ButtonGroup } from '@material-ui/core';
 import { AppContext } from './user_context';
+import axios from 'axios';
 
 function LoginPage() {
     const { userID, login } = useContext(AppContext);
@@ -29,13 +30,35 @@ function LoginPage() {
             toggleError({ email: false, password: false });
         }
 
-        // TODO: submit the login information for confirmation
-
-        if (success) {
-            login(email);
-        } else {
+        if (!success) {
             setError(errMsg);
+            return;
         }
+
+        axios
+            .get('http://localhost:5000/accounts/login', {
+                params: { email: email, password: password },
+            })
+            .then((res) => {
+                success = res.status === 200;
+            })
+            .catch((error) => {
+                success = false;
+                toggleError({ email: true, password: true });
+
+                if (error.response) {
+                    errMsg = error.response.data.error;
+                } else {
+                    errMsg = error.message;
+                }
+            })
+            .then(() => {
+                if (success) {
+                    login(email);
+                } else {
+                    setError(errMsg);
+                }
+            });
     }
 
     function handleInput(event) {

@@ -1,13 +1,9 @@
-import { useContext } from 'react';
-import { Redirect } from 'react-router-dom';
+import React, {useContext} from 'react';
 import { AppContext } from './user_context';
+import {Redirect} from "react-router-dom";
 
 function Dashboard() {
-    const { userID, logout } = useContext(AppContext);
-
-    function logoutButtonClick() {
-        logout();
-    }
+    const { userID } = useContext(AppContext);
 
     // Attempting to navigate to dashboard without being logged in
     if (userID === null) {
@@ -17,7 +13,6 @@ function Dashboard() {
     return (
         <div id="dashboard-page" className="page">
             <p>Welcome to your dashboard {userID}!!</p>
-            <button onClick={logoutButtonClick}>Log Out</button>
         </div>
     );
 }

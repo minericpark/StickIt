@@ -9,6 +9,7 @@ import {
 import Dashboard from './components/dashboard';
 import LoginPage from './components/login_page';
 import { AppContext } from './components/user_context';
+import CreateAccount from './components/create_account_page';
 
 function App() {
     const { userID } = useContext(AppContext);
@@ -25,6 +26,9 @@ function App() {
                 </Route>
                 <Route exact path="/login">
                     <LoginPage />
+                </Route>
+                <Route exact path="/create-account">
+                    <CreateAccount />
                 </Route>
                 <Route exact path="/">
                     {userID ? (

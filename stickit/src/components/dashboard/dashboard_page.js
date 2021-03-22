@@ -1,7 +1,8 @@
 import { Button, Grid, Paper } from '@material-ui/core';
 import { useContext, useState } from 'react';
 import { Redirect } from 'react-router-dom';
-import { AppContext } from './user_context';
+import { AppContext } from '../user_context';
+import DashboardCard from './dashboard_card';
 
 function Dashboard() {
     const { userID } = useContext(AppContext);
@@ -26,12 +27,11 @@ function Dashboard() {
                     justify="center"
                 >
                     {stickyBoards.length > 0 ? (
-                        stickyBoards.map((tile, i) => (
-                            <Grid item xs={3}>
-                                <Paper className="sticky-board-card">
-                                    {tile.name}
-                                </Paper>
-                            </Grid>
+                        stickyBoards.map((board, i) => (
+                            <DashboardCard
+                                id={`board${i}`}
+                                title={board.name}
+                            />
                         ))
                     ) : (
                         <Grid item xs>
@@ -54,4 +54,4 @@ function Dashboard() {
     );
 }
 //
-export default Dashboard;
+export default DashboardPage;

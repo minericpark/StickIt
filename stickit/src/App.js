@@ -11,6 +11,7 @@ import LoginPage from './components/login_page';
 import { AppContext } from './components/user_context';
 import MenuBar from "./components/menu_bar";
 import TestPage from "./components/test_page";
+import CreateAccount from "./components/create_account_page";
 
 function App() {
     const { userID } = useContext(AppContext);
@@ -26,6 +27,7 @@ function App() {
                 <Route exact path="/test" component={TestPage}/>
                 <Route exact path="/dashboard" component={Dashboard}/>
                 <Route exact path="/login" component={LoginPage}/>
+                <Route exact path="/create-account" component={CreateAccount}/>
                 <Route exact path="/">
                     {userID ? (
                         <Redirect to="/dashboard" />

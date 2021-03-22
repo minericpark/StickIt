@@ -21,11 +21,15 @@
     text-align: center;
 }
 
-#login-form {
+#login-form, #create-account-form {
     margin: auto;
     max-width: 200px;
     width: fit-content;
     border: 3px solid black;
     padding: 0 15px 15px 15px;
     text-align: center;
+}
+
+#create-account-form {
+    margin-top: 2%;
 }

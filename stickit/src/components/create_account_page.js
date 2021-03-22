@@ -5,9 +5,13 @@ import { Button, TextField, ButtonGroup } from '@material-ui/core';
 
 function CreateAccount(props) {
   const { userID, login } = useContext(AppContext);
+  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, toggleError] = useState({ email: false, password: false });
+  const [fname, setFname] = useState('');
+  const [lname, setLname] = useState('');
+  const [dob, setDOB] = useState('');
+  const [error, toggleError] = useState({ fname: false, lname: false, dob: false, email: false, password: false });
   const [errorMsg, setError] = useState('');
 
   //
@@ -15,13 +19,25 @@ function CreateAccount(props) {
     return <Redirect to="/dashboard" />;
   }
 
-  function handleLogin(event) {
+  function handleCreate(event) {
     let success = true;
     let errMsg = '';
 
     event.preventDefault();
 
-    if (email.length === 0) {
+    if (fname.length === 0) {
+        success = false;
+        errMsg = 'Please enter your first name';
+        toggleError({ fname: true });
+    } else if (lname.length === 0) {
+        success = false;
+        errMsg = 'Please enter your last name';
+        toggleError({ lname: true });
+    } else if (dob === null) {
+        success = false;
+        errMsg = 'Please enter your birthday';
+        toggleError({ dob: true });
+    } else if (email.length === 0) {
         success = false;
         errMsg = 'Please enter your email';
         toggleError({ email: true });
@@ -55,13 +71,25 @@ function CreateAccount(props) {
             if (value.trim() !== '') {
                 setPassword(value);
             }
+        } else if (name === 'fname') {
+            if (value.trim() !== '') {
+                setFname(value);
+            }
+        }  else if (name === 'lname') {
+            if (value.trim() !== '') {
+                setLname(value);
+            }
+        }  else if (name === 'dob') {
+            if (value.trim() !== '') {
+                setDOB(value);
+            }
         }
 
         setError(errMsg);
 }
   return (
     <div id="create_account_page" className="create-account-page">
-      <form id="creat-account-form" onSubmit={CreateAccount}>
+      <form id="create-account-form" onSubmit={handleCreate}>
                 <h1 className="title">Create An Account</h1>
                 <TextField
                     label="First Name"
@@ -70,7 +98,7 @@ function CreateAccount(props) {
                     size="small"
                     margin="dense"
                     variant="outlined"
-                    onChange={CreateAccount}
+                    onChange={handleInput}
                 />
                 <TextField
                     label="Last Name"
@@ -79,13 +107,16 @@ function CreateAccount(props) {
                     size="small"
                     margin="dense"
                     variant="outlined"
-                    onChange={CreateAccount}
+                    onChange={handleInput}
                 />
                 <TextField
                     id="date"
                     label="Birthday"
                     type="date"
-                    defaultValue="2017-05-24"
+                    defaultValue="2021-01-01"
+                    onChange={(dob) => {
+                      setDOB(dob);
+                    }}
                     InputLabelProps={{
                       shrink: true,
                     }}

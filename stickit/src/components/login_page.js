@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Button, TextField, ButtonGroup } from '@material-ui/core';
 import { AppContext } from './user_context';
+import axios from 'axios';
 
 function LoginPage() {
     const { userID, login } = useContext(AppContext);
@@ -11,12 +12,17 @@ function LoginPage() {
     const [error, toggleError] = useState({ email: false, password: false });
     const [errorMsg, setError] = useState('');
 
+    /** Handle login submission.
+     *
+     * @param {*} event - the submit event
+     */
     function handleLogin(event) {
         let success = true;
         let errMsg = '';
 
         event.preventDefault();
 
+        // Ensure email and password are not empty strings
         if (email.length === 0) {
             success = false;
             errMsg = 'Please enter your email';
@@ -29,15 +35,42 @@ function LoginPage() {
             toggleError({ email: false, password: false });
         }
 
-        // TODO: submit the login information for confirmation
-
-        if (success) {
-            login(email);
-        } else {
+        if (!success) {
             setError(errMsg);
+            return;
         }
+
+        // Send login request
+        axios
+            .get('http://localhost:5000/accounts/login', {
+                params: { email: email, password: password },
+            })
+            .then((res) => {
+                success = res.status === 200;
+            })
+            .catch((error) => {
+                success = false;
+                toggleError({ email: true, password: true });
+
+                if (error.response) {
+                    errMsg = error.response.data.error;
+                } else {
+                    errMsg = error.message;
+                }
+            })
+            .then(() => {
+                if (success) {
+                    login(email);
+                } else {
+                    setError(errMsg);
+                }
+            });
     }
 
+    /** Handle input from text fields and do some simple validation.
+     *
+     * @param {*} event - then text changed event
+     */
     function handleInput(event) {
         let name = event.target.name;
         let value = event.target.value;
@@ -46,10 +79,16 @@ function LoginPage() {
         if (name === 'email') {
             if (value.trim() !== '') {
                 setEmail(value);
+            } else {
+                toggleError({ email: true });
+                setError('Enter an email');
             }
         } else if (name === 'password') {
             if (value.trim() !== '') {
                 setPassword(value);
+            } else {
+                toggleError({ password: true });
+                setError('Enter password');
             }
         }
 

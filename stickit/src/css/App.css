@@ -8,6 +8,15 @@
     padding: 60px 0;
 }
 
+#menubar-navicon {
+    color: white
+}
+
+#menubar-title {
+    flex-grow: 1;
+    text-align: center;
+}
+
 #dashboard-page {
     text-align: center;
 }

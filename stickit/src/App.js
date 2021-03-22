@@ -1,5 +1,5 @@
 import './css/App.css';
-import { useContext, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import {
     BrowserRouter as Router,
     Switch,
@@ -9,7 +9,8 @@ import {
 import Dashboard from './components/dashboard';
 import LoginPage from './components/login_page';
 import { AppContext } from './components/user_context';
-import CreateAccount from './components/create_account_page';
+import MenuBar from "./components/menu_bar";
+import TestPage from "./components/test_page";
 
 function App() {
     const { userID } = useContext(AppContext);
@@ -20,16 +21,11 @@ function App() {
 
     return (
         <Router>
+            { userID ? <MenuBar /> : null}
             <Switch>
-                <Route exact path="/dashboard">
-                    <Dashboard />
-                </Route>
-                <Route exact path="/login">
-                    <LoginPage />
-                </Route>
-                <Route exact path="/create-account">
-                    <CreateAccount />
-                </Route>
+                <Route exact path="/test" component={TestPage}/>
+                <Route exact path="/dashboard" component={Dashboard}/>
+                <Route exact path="/login" component={LoginPage}/>
                 <Route exact path="/">
                     {userID ? (
                         <Redirect to="/dashboard" />

@@ -5,6 +5,39 @@ const router = express.Router();
 
 const idFilter = req => account => account.user_id === req.params.id;
 
+// used to view accounts added during active session
+router.get("/allAccounts", (req, res) => {
+    res.status(200).json(accounts);
+});
+/**
+ * required fields: email -> string, password -> string
+ * response: 200 OK; 400 Error 
+ */
+router.get("/login", (req, res) => {
+	const found = accounts.find(account => account.email == req.query.email);
+	if (req.query.password == found.password) {
+		return res.status(200).json(found);
+	}
+	return res.status(400).json({ error: 'Incorrect email or password.' });
+});
+/**
+ * required fields: string, password -> string
+ * response: 200 OK; 400 Error 
+ */
+router.post('/createUser', (req, res) => {
+	const found = accounts.find(account => account.email == req.query.email);
+	if (found) return res.status(400).json({ error: 'Email already exists.' });
+
+	const newUser = {
+		user_id : accounts.length + 1,
+		email: req.query.email,
+		password: req.query.password
+	};
+    // saves during session
+	accounts.push(newUser);
+	res.status(200).json(newUser);
+});
+
 /*
 method: PATCH
 required parameters: id -> string

@@ -1,11 +1,11 @@
 import { Grid, Paper } from '@material-ui/core';
 
-function DashboardCard({ id, title }) {
+function StickyBoardCard({ id, title }) {
     return (
-        <Grid item xs key={id}>
+        <Grid item xs={3} key={id}>
             <Paper className="sticky-board-card">{title}</Paper>
         </Grid>
     );
 }
 
-export default DashboardCard;
+export default StickyBoardCard;

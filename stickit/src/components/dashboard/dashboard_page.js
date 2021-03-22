@@ -2,9 +2,9 @@ import { Button, Grid, Paper } from '@material-ui/core';
 import { useContext, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { AppContext } from '../user_context';
-import DashboardCard from './dashboard_card';
+import StickyBoardCard from './sticky_board_card';
 
-function Dashboard() {
+function DashboardPage() {
     const { userID } = useContext(AppContext);
 
     const [stickyBoards, updateBoards] = useState([]);
@@ -16,40 +16,38 @@ function Dashboard() {
 
     return (
         <div id="dashboard-page" className="page">
-            <p>Welcome to your dashboard {userID}!!</p>
-            <div>
-                <Grid
-                    className="grid"
-                    container
-                    spacing={1}
-                    cols={3}
-                    alignContent="center"
-                    justify="center"
-                >
-                    {stickyBoards.length > 0 ? (
-                        stickyBoards.map((board, i) => (
-                            <DashboardCard
-                                id={`board${i}`}
-                                title={board.name}
-                            />
-                        ))
-                    ) : (
-                        <Grid item xs>
-                            <Paper className="sticky-board-card">
-                                <Button
-                                    color="primary"
-                                    variant="outlined"
-                                    onClick={() =>
-                                        updateBoards([{ name: 'New Board' }])
-                                    }
-                                >
-                                    Create a New Board
-                                </Button>
-                            </Paper>
-                        </Grid>
-                    )}
-                </Grid>
-            </div>
+            <Grid
+                className="grid"
+                container
+                spacing={1}
+                cols={3}
+                alignContent="center"
+                justify="center"
+            >
+                {stickyBoards.length > 0 ? (
+                    stickyBoards.map((board, i) => (
+                        <StickyBoardCard id={`board${i}`} title={board.name} />
+                    ))
+                ) : (
+                    <Grid item xs>
+                        <Paper className="sticky-board-card">
+                            <p>
+                                Welcome to your dashboard {userID}!! You
+                                currently have no sticky boards
+                            </p>
+                            <Button
+                                color="primary"
+                                variant="outlined"
+                                onClick={() =>
+                                    updateBoards([{ name: 'New Sticky Board' }])
+                                }
+                            >
+                                Create a New Board
+                            </Button>
+                        </Paper>
+                    </Grid>
+                )}
+            </Grid>
         </div>
     );
 }

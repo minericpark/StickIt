@@ -42,7 +42,7 @@ function LoginPage() {
 
         // Send login request
         axios
-            .get('http://localhost:5000/accounts/login', {
+            .get('/accounts/login', {
                 params: { email: email, password: password },
             })
             .then((res) => {

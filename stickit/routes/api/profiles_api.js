@@ -7,6 +7,7 @@ const idFilter = req => profile => profile.user_id === req.params.id;
 
 /*
 method: GET
+endpoint: /profiles
 required parameters: id -> string
 response: 200 OK; 400 Error
 */
@@ -21,11 +22,12 @@ router.get('/:id', (req,res)=>{
 
 /*
 method: POST
+endpoint: /profiles/create
 required parameters: none
 request body: user_id, first_name, last_name
 response: 200 OK; 400 Error
 */
-router.post('/', (req, res) => {
+router.post('/create', (req, res) => {
     const profile = {
         user_id: req.body.user_id,
         first_name: req.body.first_name,

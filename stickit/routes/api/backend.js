@@ -8,6 +8,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.use('/sticky', require('./sticky_api'));
 app.use('/profiles', require('./profiles_api'));
 app.use('/accounts', require('./accounts_api'));
 

@@ -4,6 +4,8 @@ const sticky_notes = require('../db/Sticky_notes.js');
 const router = express.Router();
 const idFilter = req => sticky_note => sticky_note.user_id === (req.body.user_id || req.params.user_id) && sticky_note.board_id === (req.body.board_id || req.params.board_id);
 
+var s_id = sticky_notes.length + 1;
+
 /*
 method: GET
 endpoint: /sticky
@@ -30,6 +32,7 @@ router.post('/create', (req, res) => {
     const sticky_note = {
         user_id: req.body.user_id,
         board_id: req.body.board_id,
+        sticky_id: "sticky_"+s_id,
         title: req.body.title,
         type: req.body.type,
         desc: req.body.desc,
@@ -42,6 +45,7 @@ router.post('/create', (req, res) => {
     
     sticky_notes.push(sticky_note);
     res.json(sticky_notes);
+    s_id++;
 });
 
 module.exports = router;

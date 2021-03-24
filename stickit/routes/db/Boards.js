@@ -30,6 +30,6 @@ const boards = [
 		status : "Active"
 	},
 
- ];
+];
  
- module.exports = boards;
+module.exports = boards;

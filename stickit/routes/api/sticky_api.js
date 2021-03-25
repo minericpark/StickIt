@@ -48,4 +48,32 @@ router.post('/create', (req, res) => {
     s_id++;
 });
 
+/*
+method: PATCH
+endpoint: /sticky
+required parameters: user_id, board_id, sticky_id -> string
+request body: any parameters
+response: 200 OK; 400 Error
+
+! Request body is not required. Endpoint can take in anything and patch over any given body parameters. Can also add
+new fields from the given object into database. E.g. if you send a property "title" with a value, the "title"
+property of the found sticky will be replaced. If you send a new property with a value, that property and value will
+be added into the database entry.
+*/
+router.patch('/:user_id/:board_id/:sticky_id', (req, res) => {
+    const stickyFilter = req => sticky_note => sticky_note.user_id === (req.body.user_id || req.params.user_id) && sticky_note.board_id === (req.body.board_id || req.params.board_id)
+        && sticky_note.sticky_id === (req.body.sticky_id || req.params.sticky_id);
+    const foundSticky = sticky_notes.find(stickyFilter(req));
+
+    if (!foundSticky) return res.status(400).json({ msg: `No sticky note found with the sticky_id ${req.params.sticky_id} of user_id ${req.params.user_id} and board_id ${req.params.board_id}` });
+
+    Object.assign(foundSticky, req.body);
+
+    res.status(200).json({
+        status: 'SUCCESS',
+        msg: 'Sticky note updated'
+    })
+
+});
+
 module.exports = router;

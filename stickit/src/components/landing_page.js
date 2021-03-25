@@ -1,9 +1,12 @@
 import { Button, ButtonGroup } from '@material-ui/core';
-import { useHistory } from 'react-router-dom';
+import { useContext } from 'react';
+import { Redirect, useHistory } from 'react-router-dom';
 import icon from '../img/StickItIcon.png';
+import { AppContext } from './user_context';
 
 function LandingPage() {
     const history = useHistory();
+    const { userID } = useContext(AppContext);
 
     function onLogin() {
         history.push('/login');
@@ -11,6 +14,10 @@ function LandingPage() {
 
     function onCreateAccount() {
         history.push('/create-account');
+    }
+
+    if (userID !== null) {
+        return <Redirect to="/" />;
     }
 
     return (

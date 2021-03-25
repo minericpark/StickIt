@@ -21,9 +21,7 @@ router.get('/allBoards', (req, res) => {
 */
 router.get('/:user_id', (req, res) => {
 	const found = boards.filter(board => board.user_id == req.params.user_id);
-	if (found.length) {
-		return res.status(200).json(found);
-	}
+	if (found.length) return res.status(200).json(found);
 	return res.status(400).json({ error: 'No boards were found for the user.' });
 });
 /** 
@@ -37,7 +35,7 @@ router.post('/:user_id', (req, res) => {
 	const new_board = {
 		user_id : req.params.user_id,
 		board_id : generateBoardID(req.params.user_id),
-		title : req.query.title,
+		title : req.body.title,
 		status : "Active"
 	}
 	boards.push(new_board);
@@ -53,9 +51,7 @@ router.post('/:user_id', (req, res) => {
 router.patch('/edit/:user_id/:board_id', (req, res) => {
 	const found = boards.find(boardFilter(req));
 	if (found) {
-		let updated_board = found;
-		updated_board.title = req.query.title;
-		boards.splice(boards.indexOf(found), 1, updated_board);
+		Object.assign(found, req.body);
 		return res.status(200).json({ msg : 'Board was successfully updated.'});
 	}
 	return res.status(400).json({ msg : 'Board could not be updated.' });
@@ -68,11 +64,10 @@ router.patch('/edit/:user_id/:board_id', (req, res) => {
  * response: 200 OK, 400 Error
 */
 router.patch('/activate/:user_id/:board_id', (req, res) => {
+	const activate = { status : "Active" };
 	const found = boards.find(boardFilter(req));
 	if (found) {
-		let toBeActive = found;
-		toBeActive.status = "Active";
-		boards.splice(boards.indexOf(found), 1, toBeActive);
+		Object.assign(found, activate);
 		return res.status(200).json({ msg : 'Board was successfully made active.' });
 	}
 	return res.status(400).json({ error : 'Board could not be made active.' });
@@ -85,11 +80,10 @@ router.patch('/activate/:user_id/:board_id', (req, res) => {
  * response: 200 OK, 400 Error
 */
 router.patch('/trash/:user_id/:board_id', (req, res) => {
+	const trash = { status : "Trash" };
 	const found = boards.find(boardFilter(req));
 	if (found) {
-		let toBeDeleted = found;
-		toBeDeleted.status = "Trash";
-		boards.splice(boards.indexOf(found), 1, toBeDeleted);
+		Object.assign(found, trash);
 		return res.status(200).json({ msg : 'Board was successfully placed in trash.' });
 	}
 	return res.status(400).json({ error : 'Board could not be moved to trash.' });

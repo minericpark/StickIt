@@ -29,7 +29,12 @@ const boards = [
 		title: "title of a different subject",
 		status : "Active"
 	},
-
+	{
+		user_id : "johndoe@gmail.com",
+		board_id : "board_1",
+		title: "title of a different subject",
+		status : "Active"
+	},
 ];
  
 module.exports = boards;

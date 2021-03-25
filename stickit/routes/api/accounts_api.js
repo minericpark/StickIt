@@ -14,7 +14,7 @@ router.get("/allAccounts", (req, res) => {
  * response: 200 OK; 400 Error 
  */
 router.get("/login", (req, res) => {
-	const found = accounts.find(account => account.email == req.query.email);
+	const found = accounts.find(account => account.user_id == req.query.email);
 	if (req.query.password == found.password) {
 		return res.status(200).json(found);
 	}
@@ -25,12 +25,11 @@ router.get("/login", (req, res) => {
  * response: 200 OK; 400 Error 
  */
 router.post('/createUser', (req, res) => {
-	const found = accounts.find(account => account.email == req.query.email);
+	const found = accounts.find(account => account.user_id == req.query.email);
 	if (found) return res.status(400).json({ error: 'Email already exists.' });
 
 	const newUser = {
-		user_id : accounts.length + 1,
-		email: req.query.email,
+		user_id: req.query.email,
 		password: req.query.password
 	};
     // saves during session

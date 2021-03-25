@@ -1,4 +1,5 @@
 import { Button, Grid, Paper } from '@material-ui/core';
+import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { AppContext } from '../user_context';
@@ -11,22 +12,31 @@ function DashboardPage() {
 
     // should only run when the component loads
     useEffect(() => {
-        fetchStickyBoards();
-    }, []);
-
-    /**Fetch list of user's sticky boards*/
-    function fetchStickyBoards() {
         console.log('Fetching board information');
 
-        // TODO: actually fetch the list of boards
-
-        updateBoards([
+        // temp test values
+        let boards = [
             { id: 'board_1', name: 'First Board' },
             { id: 'board_2', name: 'Test Board' },
-            { id: 'board_3', name: 'Test Board' },
-            { id: 'board_4', name: 'Test Board' },
-        ]);
-    }
+        ];
+
+        axios
+            .get(`/boards/${userID}`)
+            .then((res) => {
+                // TODO: figure out the format of the return value
+                console.log(res);
+                boards = res;
+            })
+            .catch((err) => {
+                /* TODO: Should this alert the user?
+                 * Maybe put an error message in place
+                 * of the board information */
+                console.info('Using test values for now');
+            })
+            .then(() => {
+                updateBoards(boards);
+            });
+    }, [userID]);
 
     // Attempting to navigate to dashboard without being logged in
     if (userID === null) {

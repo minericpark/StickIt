@@ -68,6 +68,7 @@ router.patch('/activate/:user_id/:board_id', (req, res) => {
 	const found = boards.find(boardFilter(req));
 	if (found) {
 		Object.assign(found, activate);
+		// need to activate all stickies on board
 		return res.status(200).json({ msg : 'Board was successfully made active.' });
 	}
 	return res.status(400).json({ error : 'Board could not be made active.' });

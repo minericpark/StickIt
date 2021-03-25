@@ -40,6 +40,7 @@ router.post('/createUser', (req, res) => {
 
 /*
 method: PATCH
+endpoint: /accounts
 required parameters: id -> string
 request body: new_password
 response: 200 OK; 400 Error

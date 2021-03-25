@@ -1,39 +1,23 @@
-import React, { useContext, useState } from 'react';
+import React, {useContext, useState} from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Drawer, List, ListItem, ListItemText, ListItemIcon, Divider,
-    AppBar, Toolbar, IconButton, Typography } from '@material-ui/core';
-import { AppContext } from './user_context';
+    AppBar, Toolbar, IconButton, Typography} from '@material-ui/core';
+import { AppContext } from '../context/user_context';
 import { Menu, ExitToApp } from '@material-ui/icons';
 
-function MenuBar() {
+function MenuBar(props) {
     const location = useLocation();
     const { logout } = useContext(AppContext);
+    const { pagesInfo } = props;
     const [drawerState, setDrawerState] = useState({
         open: false,
     });
 
+    const currentPageInfo = pagesInfo.find(obj => obj.pageRoute === location.pathname);
+
     function logoutButtonClick() {
         logout();
     }
-
-    // Get's the route pathname and changes it into a presentable title
-    // **This is currently pretty unsafe
-    function getPageName(routeName) {
-        if (!routeName || routeName === '/') return '';
-        return routeName.charAt(1).toUpperCase() + routeName.slice(2);
-    }
-
-    // Array of drawer content
-    const drawerContent = [
-        {
-            pageName: 'Dashboard',
-            pageRoute: '/dashboard'
-        },
-        {
-            pageName: 'Test',
-            pageRoute: '/test'
-        }
-    ]
 
     const toggleDrawer = (open) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -50,7 +34,7 @@ function MenuBar() {
             onClick={toggleDrawer(false)}
         >
             <List>
-                {drawerContent.map((page) => (
+                {pagesInfo.map((page) => (
                     <ListItem button key={page.pageName} component={Link} to={page.pageRoute}>
                         <ListItemText primary={page.pageName} />
                     </ListItem>
@@ -76,9 +60,11 @@ function MenuBar() {
                         <IconButton edge="start" onClick={toggleDrawer(true)}>
                             <Menu id="menubar-navicon"/>
                         </IconButton>
-                        <Typography id="menubar-title" variant="h6">
-                            {getPageName(location.pathname)}
-                        </Typography>
+                        { currentPageInfo ?
+                            <Typography id="menubar-title" variant="h6">
+                                {currentPageInfo.pageName}
+                            </Typography> : null
+                        }
                     </Toolbar>
                 </AppBar>
                 <Drawer anchor={'left'} open={drawerState['open']} onClose={toggleDrawer(false)}>

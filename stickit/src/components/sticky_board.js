@@ -1,7 +1,7 @@
 import { Paper } from '@material-ui/core';
 import React, { useContext } from 'react';
 import { Redirect } from 'react-router-dom';
-import { AppContext } from './user_context';
+import { AppContext } from './context/user_context';
 
 function StickyBoard({
     match: {

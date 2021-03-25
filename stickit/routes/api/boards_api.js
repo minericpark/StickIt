@@ -1,128 +1,86 @@
 const express = require('express');
 const boards = require('../db/Boards');
-const sticky_notes = require('../db/Sticky_notes');
 const router = express.Router();
-
 
 // global to get a specific user board
 const boardFilter = req => board => board.user_id == req.params.user_id && board.board_id == req.params.board_id;
-// global filter to get stickies attached to a specific user board
-const stickyFilter = req => sticky => sticky.user_id == req.params.user_id && sticky.board_id == req.params.board_id;
+
 /**
  * purpose: to see content of live server.
  * method: GET
- * response: 200 OK; 400 Error
+ * response: 200 OK
 */
 router.get('/allBoards', (req, res) => {
 	res.status(200).json(boards);
 });
-/** 
- * purpose: to get every board of a specific user.
- * method: GET
+/**
  * endpoint: /boards
  * required parameters: user_id -> string
- * response: 200 OK; 400 Error
+ * response: 200 OK, 400 Error
 */
-router.get('/:user_id', (req, res) => {
+router.route('/:user_id')
+// purpose: to get every board of a specific user.
+.get((req, res) => {
 	const found = boards.filter(board => board.user_id == req.params.user_id);
 	if (found.length) return res.status(200).json(found);
 	return res.status(400).json({ error: 'No boards were found for the user.' });
-});
-/** 
- * purpose: to create a new board.
- * method: POST
- * endpoint: /boards
- * required parameters: user_id -> string, title -> string
- * response: 200 OK; 400 Error
-*/
-router.post('/:user_id', (req, res) => {
+})
+// purpose: to create a new board.
+.post((req, res) => {
 	const new_board = {
 		user_id : req.params.user_id,
 		board_id : generateBoardID(req.params.user_id),
 		title : req.body.title,
-		status : "Active"
+		status : true
 	}
 	boards.push(new_board);
 	return res.status(200).json(boards);
 });
 /**
- * purpose: to edit a board.
- * method: PATCH
- * endpoint: /boards/patch
- * required parameters: user_id -> string, board_id -> string, title -> string
+ * endpoint: /boards
+ * required parameters: user_id -> string, board_id -> string
  * response: 200 OK, 400 Error
-*/
-router.patch('/edit/:user_id/:board_id', (req, res) => {
+ */
+router.route('/:user_id/:board_id')
+// purpose: to edit and add parameters to a specific users board (ie. update a board).
+.put((req, res) => {
 	const found = boards.find(boardFilter(req));
 	if (found) {
 		Object.assign(found, req.body);
-		return res.status(200).json({ msg : 'Board was successfully updated.'});
+		return res.status(200).json({ msg : 'Board was successfully updated.' });
 	}
 	return res.status(400).json({ msg : 'Board could not be updated.' });
-});
-/**
- * purpose: changes a boards status. (ie. Trash -> Active)
- * method: PATCH
- * endpoint: /boards/active
- * required parameters: user_id -> string, board_id -> string
- * response: 200 OK, 400 Error
-*/
-router.patch('/activate/:user_id/:board_id', (req, res) => {
-	const activate = { status : "Active" };
+})
+// purpose: changes a boards status (ie. Trash -> Active).
+.patch((req, res) => {
 	const found = boards.find(boardFilter(req));
 	if (found) {
-		Object.assign(found, activate);
-		// activate all stickies on board
-		sticky_notes.filter(stickyFilter(req)).map(sticky => {
-			Object.assign(sticky, activate);
-		});
-		return res.status(200).json({ msg : 'Board was successfully made active.' });
+		changeBoardStatus(found);
+		return res.status(200).json({ msg : 'Boards status was successfully changed.' });
 	}
-	return res.status(400).json({ error : 'Board could not be made active.' });
+	return res.status(400).json({ error : 'Boards status could not be changed.' });
 });
 /**
- * purpose: changes a boards status. (ie. Active -> Trash)
- * method: PATCH
- * endpoint: /boards/trash
- * required parameters: user_id -> string, board_id -> string
- * response: 200 OK, 400 Error
-*/
-router.patch('/trash/:user_id/:board_id', (req, res) => {
-	const trash = { status : "Trash" };
-	const found = boards.find(boardFilter(req));
-	if (found) {
-		Object.assign(found, trash);
-		// trash all stickies on board
-		sticky_notes.filter(stickyFilter(req)).map(sticky => {
-			Object.assign(sticky, trash);
-		});
-		return res.status(200).json({ msg : 'Board was successfully placed in trash.' });
-	}
-	return res.status(400).json({ error : 'Board could not be moved to trash.' });
-});
-/**
- * purpose: PERMANENTLY DELETES a board.
- * method: DELETE
  * endpoint: /boards/delete
  * required parameters: user_id -> string, board_id -> string
  * response: 200 OK, 400 Error
 */
-router.delete('/delete/:user_id/:board_id', (req, res) => {
+router.route('/delete/:user_id/:board_id')
+// purpose: PERMANENTLY DELETES a board.
+.delete((req, res) => {
 	const found = boards.find(boardFilter(req));
 	if (found) {
-		boards.splice(boards.indexOf(found), 1);
-		// delete all stickies on board
-		sticky_notes.filter(stickyFilter(req)).map(sticky => {
-			sticky_notes.splice(sticky_notes.indexOf(sticky), 1)
-		});
+		DELETE_A_BOARD(found);
 		return res.status(200).json({ msg : 'Board was successfully deleted.' });
 	}
 	return res.status(400).json({ error : 'Board could not be deleted.' });
 });
+
+
 /**
- * function to generate unique board_id's for each user
- * required parameters: user_id -> string
- * returns a unique board_id
+ * function to generate unique board_id's for each user.
+ * param: user_id -> string
+ * return: a unique board_id
 */
 function generateBoardID(user_id) {
 	const found = boards.filter(board => board.user_id == user_id);
@@ -133,6 +91,21 @@ function generateBoardID(user_id) {
 		return new_board_id;
 	}
 	return 'board_1';
+}
+/**
+ * function to change the bool status of a board.
+*/
+function changeBoardStatus(boardToChange) {
+	boardToChange.status = !boardToChange.status;
+	// changeStickyStatus
+}
+/**
+ * function to PERMANENTLY DELETE A BOARD and ALL STICKIES ON IT.
+ * param: boardToDELETE -> object
+*/
+function DELETE_A_BOARD(boardToDELETE) {
+	boards.splice(boards.indexOf(boardToDELETE), 1);
+	// DELETE_STICKIES_ON_BOARD
 }
 
 module.exports = router;

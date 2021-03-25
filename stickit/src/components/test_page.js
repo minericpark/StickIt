@@ -1,6 +1,6 @@
 import React, {useContext} from "react";
 import {Redirect} from "react-router-dom";
-import {AppContext} from "./user_context";
+import {AppContext} from "./context/user_context";
 
 //Just a test page for navigation testing with the menu bar
 function TestPage() {

@@ -2,7 +2,7 @@ import { Button, Grid, Paper } from '@material-ui/core';
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
-import { AppContext } from '../user_context';
+import { AppContext } from '../context/user_context';
 import StickyBoardCard from './sticky_board_card';
 
 function DashboardPage() {

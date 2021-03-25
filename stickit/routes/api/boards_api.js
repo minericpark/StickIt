@@ -85,6 +85,7 @@ router.patch('/trash/:user_id/:board_id', (req, res) => {
 	const found = boards.find(boardFilter(req));
 	if (found) {
 		Object.assign(found, trash);
+		// need to trash all stickies on board
 		return res.status(200).json({ msg : 'Board was successfully placed in trash.' });
 	}
 	return res.status(400).json({ error : 'Board could not be moved to trash.' });

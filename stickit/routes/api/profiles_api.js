@@ -5,6 +5,11 @@ const router = express.Router();
 
 const idFilter = req => profile => profile.user_id === req.params.id;
 
+// used to view profiles added during active session
+router.get("/allProfiles", (req, res) => {
+    res.status(200).json(profiles);
+});
+
 /*
 method: GET
 endpoint: /profiles
@@ -44,7 +49,7 @@ router.post('/create', (req, res) => {
 
 /*
 method: PATCH
-endpoint: /profiles
+endpoint: /profiles/edit
 required parameters: id -> string
 request body: any parameters
 response: 200 OK; 400 Error
@@ -54,7 +59,7 @@ new fields from the given object into database. E.g. if you send a property "fir
 property of the found profile will be replaced. If you send a new property with a value, that property and value will
 be added into the database entry.
 */
-router.patch('/:id', (req, res) => {
+router.patch('/edit/:id', (req, res) => {
     const foundProfile = profiles.find(idFilter(req));
 
     if (!foundProfile) return res.status(400).json({ msg: `No profile with the id of ${req.params.id}` });

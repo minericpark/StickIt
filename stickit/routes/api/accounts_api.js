@@ -39,12 +39,12 @@ router.post('/createUser', (req, res) => {
 
 /*
 method: PATCH
-endpoint: /accounts
+endpoint: /accounts/edit
 required parameters: id -> string
 request body: new_password
 response: 200 OK; 400 Error
 */
-router.patch('/:id', (req, res) => {
+router.patch('/edit/:id', (req, res) => {
     const foundAccount = accounts.find(idFilter(req));
     const newPassword = req.body.new_password;
 

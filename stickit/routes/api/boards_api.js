@@ -2,6 +2,8 @@ const express = require('express');
 const boards = require('../db/Boards');
 const router = express.Router();
 
+// global to get a specific user board
+const boardFilter = req => board => board.user_id == req.params.user_id && board.board_id == req.params.board_id;
 /**
  * purpose: to see content of live server.
  * method: GET
@@ -49,7 +51,7 @@ router.post('/:user_id', (req, res) => {
  * response: 200 OK, 400 Error
 */
 router.patch('/edit/:user_id/:board_id', (req, res) => {
-	const found = boards.find(board => board.user_id == req.params.user_id && board.board_id == req.params.board_id);
+	const found = boards.find(boardFilter(req));
 	if (found) {
 		let updated_board = found;
 		updated_board.title = req.query.title;
@@ -66,7 +68,7 @@ router.patch('/edit/:user_id/:board_id', (req, res) => {
  * response: 200 OK, 400 Error
 */
 router.patch('/activate/:user_id/:board_id', (req, res) => {
-	const found = boards.find(board => board.user_id == req.params.user_id && board.board_id == req.params.board_id);
+	const found = boards.find(boardFilter(req));
 	if (found) {
 		let toBeActive = found;
 		toBeActive.status = "Active";
@@ -83,7 +85,7 @@ router.patch('/activate/:user_id/:board_id', (req, res) => {
  * response: 200 OK, 400 Error
 */
 router.patch('/trash/:user_id/:board_id', (req, res) => {
-	const found = boards.find(board => board.user_id == req.params.user_id && board.board_id == req.params.board_id);
+	const found = boards.find(boardFilter(req));
 	if (found) {
 		let toBeDeleted = found;
 		toBeDeleted.status = "Trash";
@@ -100,7 +102,7 @@ router.patch('/trash/:user_id/:board_id', (req, res) => {
  * response: 200 OK, 400 Error
 */
 router.delete('/delete/:user_id/:board_id', (req, res) => {
-	const found = boards.find(board => board.user_id == req.params.user_id && board.board_id == req.params.board_id);
+	const found = boards.find(boardFilter(req));
 	if (found) {
 		boards.splice(boards.indexOf(found), 1);
 		return res.status(200).json({ msg : 'Board was successfully deleted.' });

@@ -12,6 +12,8 @@ function DashboardPage() {
 
     // should only run when the component loads
     useEffect(() => {
+        if (userID === null) return;
+
         console.log('Fetching board information');
 
         // temp test values

@@ -11,6 +11,7 @@ import DashboardPage from './components/dashboard/dashboard_page';
 import LoginPage from './components/login_page';
 import MenuBar from './components/menu_bar';
 import TestPage from './components/test_page';
+import StickyBoard from './components/sticky_board';
 
 function App() {
     const { userID } = useContext(AppContext);
@@ -26,6 +27,7 @@ function App() {
                 <Route exact path="/test" component={TestPage} />
                 <Route exact path="/dashboard" component={DashboardPage} />
                 <Route exact path="/login" component={LoginPage} />
+                <Route exact path="/board/:board_id" component={StickyBoard} />
                 <Route exact path="/">
                     {userID ? (
                         <Redirect to="/dashboard" />
@@ -33,6 +35,10 @@ function App() {
                         // TODO: change this to rendering the landing page
                         <Redirect to="/login" />
                     )}
+                </Route>
+                {/* If route is invalid/undefined */}
+                <Route>
+                    <Redirect to="/" />
                 </Route>
             </Switch>
         </Router>

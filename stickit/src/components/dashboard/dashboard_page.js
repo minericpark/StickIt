@@ -1,5 +1,5 @@
 import { Button, Grid, Paper } from '@material-ui/core';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { AppContext } from '../user_context';
 import StickyBoardCard from './sticky_board_card';
@@ -8,6 +8,25 @@ function DashboardPage() {
     const { userID } = useContext(AppContext);
 
     const [stickyBoards, updateBoards] = useState([]);
+
+    // should only run when the component loads
+    useEffect(() => {
+        fetchStickyBoards();
+    }, []);
+
+    /**Fetch list of user's sticky boards*/
+    function fetchStickyBoards() {
+        console.log('Fetching board information');
+
+        // TODO: actually fetch the list of boards
+
+        updateBoards([
+            { id: 'board_1', name: 'First Board' },
+            { id: 'board_2', name: 'Test Board' },
+            { id: 'board_3', name: 'Test Board' },
+            { id: 'board_4', name: 'Test Board' },
+        ]);
+    }
 
     // Attempting to navigate to dashboard without being logged in
     if (userID === null) {
@@ -25,8 +44,12 @@ function DashboardPage() {
                 justify="center"
             >
                 {stickyBoards.length > 0 ? (
-                    stickyBoards.map((board, i) => (
-                        <StickyBoardCard id={`board${i}`} title={board.name} />
+                    stickyBoards.map((board) => (
+                        <StickyBoardCard
+                            key={board.id}
+                            board_id={board.id}
+                            title={board.name}
+                        />
                     ))
                 ) : (
                     <Grid item xs>
@@ -39,7 +62,12 @@ function DashboardPage() {
                                 color="primary"
                                 variant="outlined"
                                 onClick={() =>
-                                    updateBoards([{ name: 'New Sticky Board' }])
+                                    updateBoards([
+                                        {
+                                            id: 'board_1',
+                                            name: 'New Sticky Board',
+                                        },
+                                    ])
                                 }
                             >
                                 Create a New Board

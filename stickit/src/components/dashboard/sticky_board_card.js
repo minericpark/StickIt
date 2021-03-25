@@ -1,9 +1,12 @@
 import { Grid, Paper } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
-function StickyBoardCard({ id, title }) {
+function StickyBoardCard({ title, board_id }) {
     return (
-        <Grid item xs={3} key={id}>
-            <Paper className="sticky-board-card">{title}</Paper>
+        <Grid item xs={3}>
+            <Link className="board-link" to={`/board/${board_id}`}>
+                <Paper className="sticky-board-card">{title}</Paper>
+            </Link>
         </Grid>
     );
 }

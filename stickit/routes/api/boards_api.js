@@ -34,7 +34,7 @@ router.route('/:user_id')
 		status : true
 	}
 	boards.push(new_board);
-	return res.status(200).json(boards);
+	return res.status(200).json({ msg: 'New board has been created.' });
 });
 /**
  * endpoint: /boards

@@ -98,6 +98,7 @@ function CreateAccount(props) {
                     size="small"
                     margin="dense"
                     variant="outlined"
+                    required= "true"
                     onChange={handleInput}
                 />
                 <TextField
@@ -107,6 +108,7 @@ function CreateAccount(props) {
                     size="small"
                     margin="dense"
                     variant="outlined"
+                    required= "true"
                     onChange={handleInput}
                 />
                 <TextField
@@ -131,6 +133,7 @@ function CreateAccount(props) {
                     error={error.email}
                     helperText={error.email ? errorMsg : null}
                     onChange={handleInput}
+                    required= "true"
                 />
                 <TextField
                     label="Password"
@@ -142,6 +145,7 @@ function CreateAccount(props) {
                     error={error.password}
                     helperText={error.password ? errorMsg : null}
                     onChange={handleInput}
+                    required= "true"
                 />
                 <ButtonGroup size="small" variant="contained" disableElevation>
                     {/* TODO: <Button color="default">Cancel</Button> */}

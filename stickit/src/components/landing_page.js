@@ -9,6 +9,10 @@ function LandingPage() {
         history.push('/login');
     }
 
+    function onCreateAccount() {
+        history.push('/create-account');
+    }
+
     return (
         <div id="landing-page" className="page">
             <div>
@@ -21,7 +25,9 @@ function LandingPage() {
                 orientation="vertical"
                 disableElevation
             >
-                <Button variant="contained">Create Account</Button>
+                <Button variant="contained" onClick={onCreateAccount}>
+                    Create Account
+                </Button>
                 <Button variant="outlined" onClick={onLogin}>
                     Log In
                 </Button>

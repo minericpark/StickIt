@@ -44,6 +44,7 @@ router.post('/create', (req, res) => {
 
 /*
 method: PATCH
+endpoint: /profiles
 required parameters: id -> string
 request body: any parameters
 response: 200 OK; 400 Error

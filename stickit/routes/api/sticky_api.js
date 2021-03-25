@@ -11,6 +11,8 @@ router.get("/allStickies", (req, res) => {
     res.status(200).json(sticky_notes);
 });
 
+var s_id = sticky_notes.length + 1;
+
 /*
 method: GET
 endpoint: /sticky
@@ -37,6 +39,7 @@ router.post('/create', (req, res) => {
     const sticky_note = {
         user_id: req.body.user_id,
         board_id: req.body.board_id,
+        sticky_id: "sticky_"+s_id,
         title: req.body.title,
         type: req.body.type,
         desc: req.body.desc,
@@ -49,6 +52,7 @@ router.post('/create', (req, res) => {
     
     sticky_notes.push(sticky_note);
     res.json(sticky_notes);
+    s_id++;
 });
 
 /*

@@ -18,8 +18,8 @@ function DashboardPage() {
 
         // temp test values
         let boards = [
-            { id: 'board_1', name: 'First Board' },
-            { id: 'board_2', name: 'Test Board' },
+            { board_id: 'board_1', title: 'First Board', status: 'Active' },
+            { board_id: 'board_2', title: 'Test Board', status: 'Active' },
         ];
 
         axios
@@ -58,9 +58,10 @@ function DashboardPage() {
                 {stickyBoards.length > 0 ? (
                     stickyBoards.map((board) => (
                         <StickyBoardCard
-                            key={board.id}
-                            board_id={board.id}
-                            title={board.name}
+                            key={board.board_id}
+                            board_id={board.board_id}
+                            title={board.title}
+                            status={board.status}
                         />
                     ))
                 ) : (
@@ -76,8 +77,9 @@ function DashboardPage() {
                                 onClick={() =>
                                     updateBoards([
                                         {
-                                            id: 'board_1',
-                                            name: 'New Sticky Board',
+                                            board_id: 'board_1',
+                                            title: 'New Sticky Board',
+                                            status: 'Active',
                                         },
                                     ])
                                 }

@@ -101,6 +101,7 @@ router.delete('/delete/:user_id/:board_id', (req, res) => {
 	const found = boards.find(boardFilter(req));
 	if (found) {
 		boards.splice(boards.indexOf(found), 1);
+		// need to delete all stickies on board
 		return res.status(200).json({ msg : 'Board was successfully deleted.' });
 	}
 	return res.status(400).json({ error : 'Board could not be deleted.' });

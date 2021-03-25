@@ -1,9 +1,13 @@
 const express = require('express');
 const boards = require('../db/Boards');
+const sticky_notes = require('../db/Sticky_notes');
 const router = express.Router();
+
 
 // global to get a specific user board
 const boardFilter = req => board => board.user_id == req.params.user_id && board.board_id == req.params.board_id;
+// global filter to get stickies attached to a specific user board
+const stickyFilter = req => sticky => sticky.user_id == req.params.user_id && sticky.board_id == req.params.board_id;
 /**
  * purpose: to see content of live server.
  * method: GET
@@ -68,7 +72,10 @@ router.patch('/activate/:user_id/:board_id', (req, res) => {
 	const found = boards.find(boardFilter(req));
 	if (found) {
 		Object.assign(found, activate);
-		// need to activate all stickies on board
+		// activate all stickies on board
+		sticky_notes.filter(stickyFilter(req)).map(sticky => {
+			Object.assign(sticky, activate);
+		});
 		return res.status(200).json({ msg : 'Board was successfully made active.' });
 	}
 	return res.status(400).json({ error : 'Board could not be made active.' });
@@ -85,7 +92,10 @@ router.patch('/trash/:user_id/:board_id', (req, res) => {
 	const found = boards.find(boardFilter(req));
 	if (found) {
 		Object.assign(found, trash);
-		// need to trash all stickies on board
+		// trash all stickies on board
+		sticky_notes.filter(stickyFilter(req)).map(sticky => {
+			Object.assign(sticky, trash);
+		});
 		return res.status(200).json({ msg : 'Board was successfully placed in trash.' });
 	}
 	return res.status(400).json({ error : 'Board could not be moved to trash.' });
@@ -101,7 +111,10 @@ router.delete('/delete/:user_id/:board_id', (req, res) => {
 	const found = boards.find(boardFilter(req));
 	if (found) {
 		boards.splice(boards.indexOf(found), 1);
-		// need to delete all stickies on board
+		// delete all stickies on board
+		sticky_notes.filter(stickyFilter(req)).map(sticky => {
+			sticky_notes.splice(sticky_notes.indexOf(sticky), 1)
+		});
 		return res.status(200).json({ msg : 'Board was successfully deleted.' });
 	}
 	return res.status(400).json({ error : 'Board could not be deleted.' });

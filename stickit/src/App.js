@@ -9,7 +9,6 @@ import {
 import { AppContext } from './components/context/user_context';
 import DashboardPage from './components/dashboard/dashboard_page';
 import LoginPage from './components/login_page';
-import { AppContext } from './components/user_context';
 import CreateAccount from "./components/create_account_page";
 import MenuBar from './components/menubar/menu_bar';
 import TestPage from './components/test_page';

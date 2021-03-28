@@ -9,12 +9,19 @@
 }
 
 #menubar-navicon {
-    color: white
+    color: white;
 }
 
 #menubar-title {
     flex-grow: 1;
     text-align: center;
+}
+.sticky-board-card {
+    padding: 5px;
+    text-align: center;
+}
+.grid {
+    padding: 15px;
 }
 
 #dashboard-page {
@@ -30,6 +37,11 @@
     text-align: center;
 }
 
-#create-account-form {
-    margin-top: 2%;
+a.board-link {
+    color: black;
+    text-decoration: none;
+}
+
+#landing-page {
+    text-align: center;
 }

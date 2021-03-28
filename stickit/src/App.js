@@ -6,15 +6,29 @@ import {
     Route,
     Redirect,
 } from 'react-router-dom';
-import Dashboard from './components/dashboard';
+import { AppContext } from './components/context/user_context';
+import DashboardPage from './components/dashboard/dashboard_page';
 import LoginPage from './components/login_page';
 import { AppContext } from './components/user_context';
-import MenuBar from "./components/menu_bar";
-import TestPage from "./components/test_page";
 import CreateAccount from "./components/create_account_page";
+import MenuBar from './components/menubar/menu_bar';
+import TestPage from './components/test_page';
+import StickyBoard from './components/sticky_board';
+import LandingPage from './components/landing_page';
 
 function App() {
     const { userID } = useContext(AppContext);
+
+    const pagesInfo = [
+        {
+            pageName: 'Dashboard',
+            pageRoute: '/dashboard'
+        },
+        {
+            pageName: 'Test',
+            pageRoute: '/test'
+        }
+    ]
 
     useEffect(() => {
         localStorage.setItem('userID', userID);
@@ -22,19 +36,18 @@ function App() {
 
     return (
         <Router>
-            { userID ? <MenuBar /> : null}
+            {userID ? <MenuBar pagesInfo={pagesInfo}/> : null}
             <Switch>
-                <Route exact path="/test" component={TestPage}/>
-                <Route exact path="/dashboard" component={Dashboard}/>
-                <Route exact path="/login" component={LoginPage}/>
-                <Route exact path="/create-account" component={CreateAccount}/>
+                <Route exact path="/test" component={TestPage} />
+                <Route exact path="/dashboard" component={DashboardPage} />
+                <Route exact path="/login" component={LoginPage} />
+                <Route exact path="/board/:board_id" component={StickyBoard} />
                 <Route exact path="/">
-                    {userID ? (
-                        <Redirect to="/dashboard" />
-                    ) : (
-                        // TODO: change this to rendering the landing page
-                        <Redirect to="/create-account" />
-                    )}
+                    {userID ? <Redirect to="/dashboard" /> : <LandingPage />}
+                </Route>
+                {/* If route is invalid/undefined */}
+                <Route>
+                    <Redirect to="/" />
                 </Route>
             </Switch>
         </Router>

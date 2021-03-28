@@ -33,7 +33,7 @@ function App() {
                         <Redirect to="/dashboard" />
                     ) : (
                         // TODO: change this to rendering the landing page
-                        <Redirect to="/login" />
+                        <Redirect to="/create-account" />
                     )}
                 </Route>
             </Switch>

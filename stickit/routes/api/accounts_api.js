@@ -29,8 +29,8 @@ router.post('/createUser', (req, res) => {
 	if (found) return res.status(400).json({ error: 'Email already exists.' });
 
 	const newUser = {
-		user_id: req.query.email,
-		password: req.query.password
+		user_id: req.body.user_id,
+		password: req.body.password
 	};
     // saves during session
 	accounts.push(newUser);

@@ -34,20 +34,28 @@ router.route('/:user_id')
 		status : true
 	}
 	boards.push(new_board);
-	return res.status(200).json({ msg: 'New board has been created.' });
+	return res.status(200).json(new_board);
 });
 /**
  * endpoint: /boards
  * required parameters: user_id -> string, board_id -> string
  * response: 200 OK, 400 Error
- */
+*/
 router.route('/:user_id/:board_id')
+// purpose to get a specific board of a specific user
+.get((req, res) => {
+	const found = boards.find(boardFilter(req));
+	if (found) {
+		return res.status(200).json(found);
+	}
+	return res.status(400).json({ error: 'Board could not be found.' });
+})
 // purpose: to edit and add parameters to a specific users board (ie. update a board).
 .put((req, res) => {
 	const found = boards.find(boardFilter(req));
 	if (found) {
 		Object.assign(found, req.body);
-		return res.status(200).json({ msg : 'Board was successfully updated.' });
+		return res.status(200).json(found);
 	}
 	return res.status(400).json({ msg : 'Board could not be updated.' });
 })
@@ -56,7 +64,7 @@ router.route('/:user_id/:board_id')
 	const found = boards.find(boardFilter(req));
 	if (found) {
 		changeBoardStatus(found);
-		return res.status(200).json({ msg : 'Boards status was successfully changed.' });
+		return res.status(200).json(found);
 	}
 	return res.status(400).json({ error : 'Boards status could not be changed.' });
 });
@@ -93,19 +101,19 @@ function generateBoardID(user_id) {
 	return 'board_1';
 }
 /**
- * function to change the bool status of a board.
+ * function to change the bool status of a board (true -> Active, false -> Trash).
+ * param: boardToChange -> object
 */
 function changeBoardStatus(boardToChange) {
 	boardToChange.status = !boardToChange.status;
-	// changeStickyStatus
 }
 /**
- * function to PERMANENTLY DELETE A BOARD and ALL STICKIES ON IT.
+ * function to PERMANENTLY DELETE A BOARD.
+ * function DOES NOT DELETE the sticky notes on the board.
  * param: boardToDELETE -> object
 */
 function DELETE_A_BOARD(boardToDELETE) {
 	boards.splice(boards.indexOf(boardToDELETE), 1);
-	// DELETE_STICKIES_ON_BOARD
 }
 
 module.exports = router;

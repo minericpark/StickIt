@@ -1,14 +1,12 @@
 import { Paper } from '@material-ui/core';
-import React, { useContext } from 'react';
-import { Redirect } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { Redirect, useParams } from 'react-router-dom';
 import { AppContext } from './context/user_context';
 
-function StickyBoard({
-    match: {
-        params: { board_id },
-    },
-}) {
+function StickyBoardPage() {
+    const { board_id } = useParams();
     const { userID } = useContext(AppContext);
+    const [title, setTitle] = useState(board_id);
 
     if (userID === null) {
         return <Redirect to="/" />;
@@ -17,10 +15,10 @@ function StickyBoard({
     return (
         <div id="sticky-board" className="page">
             <Paper>
-                <h1>{board_id}</h1>
+                <h1>{title}</h1>
             </Paper>
         </div>
     );
 }
 
-export default StickyBoard;
+export default StickyBoardPage;

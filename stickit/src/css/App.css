@@ -28,7 +28,7 @@
     text-align: center;
 }
 
-#login-form {
+#login-form, #create-account-form {
     margin: auto;
     max-width: 200px;
     width: fit-content;

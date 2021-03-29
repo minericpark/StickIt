@@ -4,7 +4,7 @@ import { Redirect } from "react-router-dom";
 import { Button, TextField, ButtonGroup } from '@material-ui/core';
 import axios from 'axios';
 
-function CreateAccount() {
+function CreateAccountPage() {
   const { userID, login } = useContext(AppContext);
   
   const [email, setEmail] = useState('');
@@ -197,4 +197,4 @@ function CreateAccount() {
   
 }
 
-export default CreateAccount;
+export default CreateAccountPage;

@@ -32,8 +32,8 @@ function DashboardPage() {
                 return res.data;
             })
             .catch((err) => {
+                // TODO: confirm this is the correct error message
                 if (err.response) {
-                    // TODO: confirm this is the correct error message
                     console.error(err.response.data.error);
                 }
 
@@ -44,13 +44,13 @@ function DashboardPage() {
                         user_id: userID,
                         board_id: 'board_1',
                         title: 'First Board',
-                        status: 'Active',
+                        status: true,
                     },
                     {
                         user_id: userID,
                         board_id: 'board_2',
                         title: 'Test Board',
-                        status: 'Active',
+                        status: false,
                     },
                 ];
             })

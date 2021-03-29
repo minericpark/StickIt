@@ -20,6 +20,9 @@
     padding: 5px;
     text-align: center;
 }
+.sticky-board-card.disabled {
+    background-color: lightgray;
+}
 .grid {
     padding: 15px;
 }

@@ -12,7 +12,7 @@ import LoginPage from './components/login_page';
 import CreateAccountPage from './components/create_account_page';
 import MenuBar from './components/menubar/menu_bar';
 import TestPage from './components/test_page';
-import StickyBoard from './components/sticky_board';
+import StickyBoardPage from './components/sticky_board_page';
 import LandingPage from './components/landing_page';
 
 function App() {
@@ -21,13 +21,13 @@ function App() {
     const pagesInfo = [
         {
             pageName: 'Dashboard',
-            pageRoute: '/dashboard'
+            pageRoute: '/dashboard',
         },
         {
             pageName: 'Test',
-            pageRoute: '/test'
-        }
-    ]
+            pageRoute: '/test',
+        },
+    ];
 
     useEffect(() => {
         localStorage.setItem('userID', userID);
@@ -35,13 +35,17 @@ function App() {
 
     return (
         <Router>
-            {userID ? <MenuBar pagesInfo={pagesInfo}/> : null}
+            {userID ? <MenuBar pagesInfo={pagesInfo} /> : null}
             <Switch>
                 <Route exact path="/test" component={TestPage} />
                 <Route exact path="/dashboard" component={DashboardPage} />
                 <Route exact path="/create-account" component={CreateAccountPage}/>
                 <Route exact path="/login" component={LoginPage} />
-                <Route exact path="/board/:board_id" component={StickyBoard} />
+                <Route
+                    exact
+                    path="/board/:board_id"
+                    component={StickyBoardPage}
+                />
                 <Route exact path="/">
                     {userID ? <Redirect to="/dashboard" /> : <LandingPage />}
                 </Route>

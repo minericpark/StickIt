@@ -46,10 +46,14 @@ function StickyBoardPage() {
                     justify="center"
                 >
                     <StickyNote
+                        board_id={board_id}
+                        sticky_id="sticky_1"
                         title="First Sticky Note"
                         description="A basic sticky note without a due date"
                     />
                     <StickyNote
+                        board_id={board_id}
+                        sticky_id="sticky_2"
                         title="Advanced Sticky"
                         description="An advanced sticky note with a due date"
                         advanced
@@ -57,6 +61,8 @@ function StickyBoardPage() {
                         colour="blue"
                     />
                     <StickyNote
+                        board_id={board_id}
+                        sticky_id="sticky_3"
                         title="Green Sticky Note"
                         description="A basic sticky note that is green"
                         colour="green"

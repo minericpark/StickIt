@@ -27,6 +27,23 @@
     padding: 15px;
 }
 
+.sticky-note {
+    height: fit-content;
+    max-height: 200px;
+}
+.sticky-note > p.description {
+    padding: 0px 15px;
+}
+.sticky-note > p.due-date {
+    margin: 0px;
+}
+.sticky-note.yellow {
+    background-color: yellow;
+}
+.sticky-note.yellow > h2.title {
+    background-color: gold;
+}
+
 #dashboard-page {
     text-align: center;
 }

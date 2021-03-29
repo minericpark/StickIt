@@ -1,8 +1,9 @@
-import { Paper } from '@material-ui/core';
+import { Grid, Paper } from '@material-ui/core';
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { UserContext } from './context/user_context';
+import StickyNote from './stickyboard/sticky_note';
 
 function StickyBoardPage() {
     const { board_id } = useParams();
@@ -36,6 +37,25 @@ function StickyBoardPage() {
         <div id="sticky-board" className="page">
             <Paper>
                 <h1 className="title">{title}</h1>
+                <Grid
+                    className="grid"
+                    container
+                    spacing={1}
+                    cols={3}
+                    alignContent="center"
+                    justify="center"
+                >
+                    <StickyNote
+                        title="First Sticky Note"
+                        description="A basic sticky note without a due date"
+                    />
+                    <StickyNote
+                        title="Advanced Sticky"
+                        description="An advanced sticky note with a due date"
+                        advanced
+                        dueDate="10/10/10"
+                    />
+                </Grid>
             </Paper>
         </div>
     );

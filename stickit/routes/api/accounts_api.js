@@ -14,23 +14,23 @@ router.get("/allAccounts", (req, res) => {
  * response: 200 OK; 400 Error 
  */
 router.get("/login", (req, res) => {
-	const found = accounts.find(account => account.user_id == req.query.email);
-	if (req.query.password == found.password) {
-		return res.status(200).json(found);
+	const found = accounts.find(account => account.user_id == req.body.email);
+	if (!found || found.password != req.body.password) {
+		return res.status(400).json({ error: 'Incorrect email or password.' });
 	}
-	return res.status(400).json({ error: 'Incorrect email or password.' });
+	return res.status(200).json(found);
 });
 /**
  * required fields: string, password -> string
  * response: 200 OK; 400 Error 
  */
 router.post('/createUser', (req, res) => {
-	const found = accounts.find(account => account.user_id == req.query.email);
+	const found = accounts.find(account => account.user_id == req.body.email);
 	if (found) return res.status(400).json({ error: 'Email already exists.' });
 
 	const newUser = {
-		user_id: req.query.email,
-		password: req.query.password
+		user_id: req.body.email,
+		password: req.body.password
 	};
     // saves during session
 	accounts.push(newUser);

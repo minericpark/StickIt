@@ -37,11 +37,24 @@
 .sticky-note > p.due-date {
     margin: 0px;
 }
+
 .sticky-note.yellow {
     background-color: yellow;
 }
 .sticky-note.yellow > h2.title {
     background-color: gold;
+}
+.sticky-note.blue {
+    background-color: lightskyblue;
+}
+.sticky-note.blue > h2.title {
+    background-color: lightsteelblue;
+}
+.sticky-note.green {
+    background-color: greenyellow;
+}
+.sticky-note.green > h2.title {
+    background-color: lightgreen;
 }
 
 #dashboard-page {

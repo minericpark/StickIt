@@ -54,6 +54,12 @@ function StickyBoardPage() {
                         description="An advanced sticky note with a due date"
                         advanced
                         dueDate="10/10/10"
+                        colour="blue"
+                    />
+                    <StickyNote
+                        title="Green Sticky Note"
+                        description="A basic sticky note that is green"
+                        colour="green"
                     />
                 </Grid>
             </Paper>

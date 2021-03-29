@@ -11,7 +11,7 @@ import DashboardPage from './components/dashboard/dashboard_page';
 import LoginPage from './components/login_page';
 import CreateAccountPage from './components/create_account_page';
 import MenuBar from './components/menubar/menu_bar';
-import StickyBoardPage from './components/sticky_board_page';
+import StickyBoardPage from './components/stickyboard/sticky_board_page';
 import LandingPage from './components/landing_page';
 
 function App() {

@@ -3,7 +3,7 @@ import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { UserContext } from './context/user_context';
-import StickyNote from './stickyboard/sticky_note';
+import StickyNote from './sticky_note';
 
 function StickyBoardPage() {
     const { board_id } = useParams();

@@ -29,6 +29,22 @@ router.get('/:user_id/:board_id', (req,res)=>{
 });
 
 /*
+purpose: Gets a specified sticky note of given user_id, board_id and sticky_id (unique)
+method: GET
+endpoint: /sticky
+required parameters: user_id -> string, board_id -> string, sticky_id -> string
+response: 200 OK; 400 Error
+*/
+router.get('/:user_id/:board_id/:sticky_id', (req,res)=>{
+    const found = sticky_notes.some(stickyIdFilter(req));
+    if (found) {
+        res.json(sticky_notes.find(stickyIdFilter(req)));
+    } else {
+        res.status(400).json({ msg: `No record found for user_id of ${req.params.user_id} & board_id of ${req.params.board_id} * sticky_id of ${req.params.sticky_id}` });
+    }
+});
+
+/*
 method: POST
 endpoint: /sticky/create
 required parameters: user_id, board_id, title, desc, type -> string

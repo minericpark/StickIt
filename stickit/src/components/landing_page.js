@@ -2,7 +2,7 @@ import { Button, ButtonGroup } from '@material-ui/core';
 import { useContext } from 'react';
 import { Redirect, useHistory } from 'react-router-dom';
 import icon from '../img/StickItIcon.png';
-import { AppContext } from './user_context';
+import { AppContext } from './context/user_context';
 
 function LandingPage() {
     const history = useHistory();

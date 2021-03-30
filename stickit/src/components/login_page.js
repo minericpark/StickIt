@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Button, TextField, ButtonGroup } from '@material-ui/core';
-import { AppContext } from './user_context';
+import { AppContext } from './context/user_context';
 import axios from 'axios';
 
 function LoginPage() {

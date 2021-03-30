@@ -2,7 +2,7 @@ import { Button, Grid, Paper } from '@material-ui/core';
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
-import { AppContext } from '../user_context';
+import { AppContext } from '../context/user_context';
 import StickyBoardCard from './sticky_board_card';
 
 function DashboardPage() {
@@ -10,32 +10,51 @@ function DashboardPage() {
 
     const [stickyBoards, updateBoards] = useState([]);
 
+    function handleCreateBoard() {
+        // TODO: redirect to/open the create board form
+        updateBoards([
+            {
+                user_id: userID,
+                board_id: 'board_1',
+                title: 'New Sticky Board',
+                status: true,
+            },
+        ]);
+    }
+
     // should only run when the component loads
     useEffect(() => {
         if (userID === null) return;
 
-        console.log('Fetching board information');
-
-        // temp test values
-        let boards = [
-            { board_id: 'board_1', title: 'First Board', status: 'Active' },
-            { board_id: 'board_2', title: 'Test Board', status: 'Active' },
-        ];
-
         axios
             .get(`/boards/${userID}`)
             .then((res) => {
-                // TODO: figure out the format of the return value
-                console.log(res);
-                boards = res;
+                return res.data;
             })
             .catch((err) => {
-                /* TODO: Should this alert the user?
-                 * Maybe put an error message in place
-                 * of the board information */
+                // TODO: confirm this is the correct error message
+                if (err.response) {
+                    console.error(err.response.data.error);
+                }
+
+                // TODO: remove temp test values
                 console.info('Using test values for now');
+                return [
+                    {
+                        user_id: userID,
+                        board_id: 'board_1',
+                        title: 'First Board',
+                        status: true,
+                    },
+                    {
+                        user_id: userID,
+                        board_id: 'board_2',
+                        title: 'Test Board',
+                        status: false,
+                    },
+                ];
             })
-            .then(() => {
+            .then((boards) => {
                 updateBoards(boards);
             });
     }, [userID]);
@@ -74,15 +93,7 @@ function DashboardPage() {
                             <Button
                                 color="primary"
                                 variant="outlined"
-                                onClick={() =>
-                                    updateBoards([
-                                        {
-                                            board_id: 'board_1',
-                                            title: 'New Sticky Board',
-                                            status: 'Active',
-                                        },
-                                    ])
-                                }
+                                onClick={handleCreateBoard}
                             >
                                 Create a New Board
                             </Button>
@@ -93,5 +104,5 @@ function DashboardPage() {
         </div>
     );
 }
-//
+
 export default DashboardPage;

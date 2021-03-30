@@ -28,6 +28,7 @@ function App() {
         },
     ];
 
+    // Store userID when it is changed
     useEffect(() => {
         localStorage.setItem('userID', userID);
     }, [userID]);

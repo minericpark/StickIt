@@ -33,7 +33,7 @@ function DashboardPage() {
             });
     }
 
-    // should only run when the component loads
+    // Fetch user's sticky boards
     useEffect(() => {
         if (userID === null) return;
 

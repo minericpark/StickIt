@@ -9,6 +9,7 @@ function StickyBoardPage() {
     const { userID } = useContext(UserContext);
     const [title, setTitle] = useState(board_id);
 
+    // Fetch information about the sticky board on load
     useEffect(() => {
         if (userID === null) return;
 

@@ -2,11 +2,11 @@ import { Button, ButtonGroup } from '@material-ui/core';
 import { useContext } from 'react';
 import { Redirect, useHistory } from 'react-router-dom';
 import icon from '../img/StickItIcon.png';
-import { AppContext } from './context/user_context';
+import { UserContext } from './context/user_context';
 
 function LandingPage() {
     const history = useHistory();
-    const { userID } = useContext(AppContext);
+    const { userID } = useContext(UserContext);
 
     function onLogin() {
         history.push('/login');

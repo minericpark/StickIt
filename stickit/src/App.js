@@ -6,7 +6,7 @@ import {
     Route,
     Redirect,
 } from 'react-router-dom';
-import { AppContext } from './components/context/user_context';
+import { UserContext } from './components/context/user_context';
 import DashboardPage from './components/dashboard/dashboard_page';
 import LoginPage from './components/login_page';
 import CreateAccountPage from './components/create_account_page';
@@ -15,7 +15,7 @@ import StickyBoardPage from './components/sticky_board_page';
 import LandingPage from './components/landing_page';
 
 function App() {
-    const { userID } = useContext(AppContext);
+    const { userID } = useContext(UserContext);
 
     const pagesInfo = [
         {

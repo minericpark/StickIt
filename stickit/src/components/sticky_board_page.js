@@ -2,11 +2,11 @@ import { Paper } from '@material-ui/core';
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
-import { AppContext } from './context/user_context';
+import { UserContext } from './context/user_context';
 
 function StickyBoardPage() {
     const { board_id } = useParams();
-    const { userID } = useContext(AppContext);
+    const { userID } = useContext(UserContext);
     const [title, setTitle] = useState(board_id);
 
     useEffect(() => {

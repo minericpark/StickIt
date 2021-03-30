@@ -1,11 +1,11 @@
 import React, { useContext, useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { Button, TextField } from '@material-ui/core';
-import { AppContext } from './context/user_context';
+import { UserContext } from './context/user_context';
 import axios from 'axios';
 
 function LoginPage() {
-    const { userID, login } = useContext(AppContext);
+    const { userID, login } = useContext(UserContext);
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');

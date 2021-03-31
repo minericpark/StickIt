@@ -31,7 +31,8 @@
     text-align: center;
 }
 
-#login-form, #create-account-form {
+#login-form,
+#create-account-form {
     margin: auto;
     max-width: 200px;
     width: fit-content;
@@ -40,7 +41,8 @@
     text-align: center;
 }
 
-a.board-link {
+a.board-link,
+a.button-link {
     color: black;
     text-decoration: none;
 }

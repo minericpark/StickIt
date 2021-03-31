@@ -1,6 +1,6 @@
 import { createContext, useState } from 'react';
 
-const AppContext = createContext();
+const UserContext = createContext();
 
 /** Provides the context
  *
@@ -8,14 +8,16 @@ const AppContext = createContext();
  * @param {*} children the provider's child components
  * @returns
  */
-function AppProvider({ userID, children }) {
+function UserProvider({ userID, children }) {
     const [state, setState] = useState({
         userID: userID,
         login: (user) => setState({ ...state, userID: user }),
         logout: () => setState({ ...state, userID: null }),
     });
 
-    return <AppContext.Provider value={state}>{children}</AppContext.Provider>;
+    return (
+        <UserContext.Provider value={state}>{children}</UserContext.Provider>
+    );
 }
 
-export { AppContext, AppProvider };
+export { UserContext, UserProvider };

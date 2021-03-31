@@ -1,11 +1,11 @@
 import React, { useContext, useState } from 'react';
-import { Redirect } from 'react-router-dom';
-import { Button, TextField, ButtonGroup } from '@material-ui/core';
-import { AppContext } from './context/user_context';
+import { Link, Redirect } from 'react-router-dom';
+import { Button, TextField } from '@material-ui/core';
+import { UserContext } from './context/user_context';
 import axios from 'axios';
 
 function LoginPage() {
-    const { userID, login } = useContext(AppContext);
+    const { userID, login } = useContext(UserContext);
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -126,12 +126,22 @@ function LoginPage() {
                     helperText={error.password ? errorMsg : null}
                     onChange={handleInput}
                 />
-                <ButtonGroup size="small" variant="contained" disableElevation>
-                    {/* TODO: <Button color="default">Cancel</Button> */}
-                    <Button color="primary" type="submit">
+                <div>
+                    <Link to="/" className="button-link">
+                        <Button color="primary" variant="outlined" size="small">
+                            Cancel
+                        </Button>
+                    </Link>
+                    <Button
+                        color="primary"
+                        variant="contained"
+                        type="submit"
+                        size="small"
+                    >
                         Log In
                     </Button>
-                </ButtonGroup>
+                </div>
+                <Link to="/create-account">Create Account</Link>
             </form>
         </div>
     );

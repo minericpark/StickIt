@@ -3,16 +3,16 @@ import ReactDOM from 'react-dom';
 import './css/index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { AppProvider } from './components/context/user_context';
+import { UserProvider } from './components/context/user_context';
 
 let userID = localStorage.getItem('userID');
 if (userID === 'null') userID = null;
 
 ReactDOM.render(
     <React.StrictMode>
-        <AppProvider userID={userID}>
+        <UserProvider userID={userID}>
             <App />
-        </AppProvider>
+        </UserProvider>
     </React.StrictMode>,
     document.getElementById('root')
 );

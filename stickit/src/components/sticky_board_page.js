@@ -1,12 +1,32 @@
 import { Paper } from '@material-ui/core';
-import React, { useContext, useState } from 'react';
+import axios from 'axios';
+import React, { useContext, useEffect, useState } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
-import { AppContext } from './context/user_context';
+import { UserContext } from './context/user_context';
 
 function StickyBoardPage() {
     const { board_id } = useParams();
-    const { userID } = useContext(AppContext);
+    const { userID } = useContext(UserContext);
     const [title, setTitle] = useState(board_id);
+
+    // Fetch information about the sticky board on load
+    useEffect(() => {
+        if (userID === null) return;
+
+        axios
+            .get(`/boards/${userID}/${board_id}`)
+            .then((res) => {
+                console.log(res.data);
+                setTitle(res.data.title);
+            })
+            .catch((err) => {
+                if (err.response.data.error) {
+                    console.error(err.response.data.error);
+                } else {
+                    console.log(err.message);
+                }
+            });
+    }, [userID, board_id]);
 
     if (userID === null) {
         return <Redirect to="/" />;
@@ -15,7 +35,7 @@ function StickyBoardPage() {
     return (
         <div id="sticky-board" className="page">
             <Paper>
-                <h1>{title}</h1>
+                <h1 className="title">{title}</h1>
             </Paper>
         </div>
     );

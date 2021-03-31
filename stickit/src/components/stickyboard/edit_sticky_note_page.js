@@ -3,11 +3,11 @@ import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import { Redirect, useParams } from 'react-router';
 import { Link } from 'react-router-dom';
-import { AppContext } from '../context/user_context';
+import { UserContext } from '../context/user_context';
 
 function EditStickyNotePage() {
     const { board_id, sticky_id } = useParams();
-    const { userID } = useContext(AppContext);
+    const { userID } = useContext(UserContext);
 
     // NOTE: currenlty defaulting the displayed title to the sticky_id
     const [title, setTitle] = useState(sticky_id);

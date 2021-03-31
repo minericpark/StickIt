@@ -2,7 +2,7 @@ import { Grid, Paper } from '@material-ui/core';
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
-import { UserContext } from './context/user_context';
+import { UserContext } from '../context/user_context';
 import StickyNote from './sticky_note';
 
 function StickyBoardPage() {

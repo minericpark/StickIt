@@ -65,7 +65,7 @@ function EditStickyNotePage() {
     function handleDelete() {
         if (
             window.confirm(
-                'Are you sure you would like to delete this sticky note?'
+                'This will permenantely delete the sticky note.\nAre you sure you would like to delete this sticky note?'
             )
         ) {
             axios

@@ -62,7 +62,7 @@ router.post('/create', (req, res) => {
         due_date: req.body.due_date
     };
 
-    if (!sticky_note.title || !sticky_note.desc || !sticky_note.type) {
+    if (!sticky_note.title || !sticky_note.desc || sticky_note.type === null) {
         return res.status(400).json({ msg: 'Please include a title, desc, type' });
     }
     

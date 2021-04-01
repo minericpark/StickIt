@@ -1,7 +1,7 @@
 import { Button, Grid, Paper } from '@material-ui/core';
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { UserContext } from '../context/user_context';
 import StickyBoardCard from './sticky_board_card';
 
@@ -10,33 +10,9 @@ function DashboardPage() {
 
     const [stickyBoards, updateBoards] = useState([]);
 
-    function handleCreateBoard() {
-        // TODO: redirect to/open the create board form?
-        let newBoard = {
-            user_id: userID,
-            title: 'New Sticky Board',
-            status: true,
-        };
-
-        axios
-            .post(`/boards/${userID}`, newBoard)
-            .then(() => {
-                console.log('Successfully created new board!');
-                window.location.reload();
-            })
-            .catch((err) => {
-                if (err.response) {
-                    console.error(err.response.data.errror);
-                } else {
-                    console.error(err.message);
-                }
-            });
-    }
-
     // Fetch user's sticky boards
     useEffect(() => {
         if (userID === null) return;
-
         axios
             .get(`/boards/${userID}`)
             .then((res) => {
@@ -85,13 +61,16 @@ function DashboardPage() {
                                 Welcome to your dashboard {userID}!! You
                                 currently have no sticky boards
                             </p>
-                            <Button
-                                color="primary"
-                                variant="outlined"
-                                onClick={handleCreateBoard}
-                            >
-                                Create a New Board
-                            </Button>
+                            <Link className="button-link" to="/create-board">
+                                <Button
+                                    color="primary"
+                                    variant="outlined"
+                                    
+                                >
+                                    Create a New Board
+                                </Button>
+                            </Link>
+                            
                         </Paper>
                     </Grid>
                 )}

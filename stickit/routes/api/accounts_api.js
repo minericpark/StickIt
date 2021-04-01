@@ -14,9 +14,8 @@ router.get("/allAccounts", (req, res) => {
  * response: 200 OK; 400 Error 
  */
 router.get("/login", (req, res) => {
-	console.log(req.body);
-	const found = accounts.find(account => account.user_id == req.body.user_id);
-	if (!found || found.password != req.body.password) {
+	const found = accounts.find(account => account.user_id == req.query.email);
+	if (!found || found.password != req.query.password) {
 		return res.status(400).json({ error: 'Incorrect email or password.' });
 	}
 	return res.status(200).json(found);

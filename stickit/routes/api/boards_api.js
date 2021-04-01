@@ -28,8 +28,8 @@ router.route('/:user_id')
 // purpose: to create a new board.
 .post((req, res) => {
 	const new_board = {
-		user_id : req.params.user_id,
-		board_id : generateBoardID(req.params.user_id),
+		user_id : req.body.user_id,
+		board_id : generateBoardID(req.body.user_id),
 		title : req.body.title,
 		status : true
 	}

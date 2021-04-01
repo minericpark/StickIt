@@ -9,6 +9,22 @@ const idFilter = req => account => account.user_id === req.params.id;
 router.get("/allAccounts", (req, res) => {
     res.status(200).json(accounts);
 });
+
+/**
+ method: GET
+ endpoint: /accounts/verify
+ purpose: verifies whether an account using given email exists in database
+ required parameters: email -> string
+ response: 200 OK; 400 Error
+ */
+router.get("/verify", (req, res) => {
+	const found = accounts.find(account => account.user_id == req.query.email);
+	if (!found) {
+		return res.status(400).json({ msg: `No account using email ${req.query.email}` });
+	}
+	return res.status(200).json(found.user_id);
+});
+
 /**
  * required fields: email -> string, password -> string
  * response: 200 OK; 400 Error 

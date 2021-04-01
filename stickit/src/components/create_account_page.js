@@ -43,7 +43,7 @@ function CreateAccountPage() {
             .then((res) => {
                 success = false;
                 console.log('account already exists');
-                alert('Error - account with email already exists')
+                alert('Account with already exists')
             })
             .catch(async() => {
                 console.log('account does not exist');

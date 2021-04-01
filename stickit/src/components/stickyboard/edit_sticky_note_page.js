@@ -9,27 +9,47 @@ function EditStickyNotePage() {
     const { board_id, sticky_id } = useParams();
     const { userID } = useContext(UserContext);
 
-    // NOTE: currenlty defaulting the displayed title to the sticky_id
-    const [title, setTitle] = useState(sticky_id);
-    const [description, setDescription] = useState();
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
     const [errMsg, setError] = useState();
 
     function handleSubmit(e) {
         e.preventDefault();
 
-        // submit changes
-        axios
-            .patch(`/sticky/edit/${userID}/${board_id}/${sticky_id}`, {
-                title: title,
-                description: description,
-            })
-            .catch((err) => {
-                if (err.response.data.msg) {
-                    setError(err.response.data.msg);
-                } else {
-                    setError(err.message);
-                }
-            });
+        if (sticky_id) {
+            // submit changes
+            axios
+                .patch(`/sticky/edit/${userID}/${board_id}/${sticky_id}`, {
+                    title: title,
+                    description: description,
+                })
+                .catch((err) => {
+                    if (err.response.data.msg) {
+                        setError(err.response.data.msg);
+                    } else {
+                        setError(err.message);
+                    }
+                });
+        } else {
+            // create new sticky note
+            axios
+                .post('/sticky/create', {
+                    board_id: board_id,
+                    user_id: userID,
+                    title: title,
+                    desc: description,
+                    // TODO: add a field for these values
+                    type: 0,
+                    due_date: null,
+                })
+                .catch((err) => {
+                    if (err.response.data.msg) {
+                        setError(err.response.data.msg);
+                    } else {
+                        setError(err.message);
+                    }
+                });
+        }
     }
 
     function handleInput(e) {
@@ -45,14 +65,14 @@ function EditStickyNotePage() {
 
     useEffect(() => {
         if (userID === null) return;
-        if (sticky_id === null) return;
+        if (!sticky_id) return;
 
         // get sticky note information
         axios
             .get(`/sticky/${userID}/${board_id}/${sticky_id}`)
             .then((res) => {
                 setTitle(res.data.title);
-                setDescription(res.data.description);
+                setDescription(res.data.desc);
                 setError('');
             })
             .catch((err) => {
@@ -73,11 +93,12 @@ function EditStickyNotePage() {
 
     return (
         <div id="edit-sticky-page" className="page">
-            <h1 className="title">Edit Sticky Note</h1>
+            <h1 className="title">
+                {sticky_id ? 'Edit' : 'Create'} Sticky Note
+            </h1>
             <form id="edit-sticky-form" onSubmit={handleSubmit}>
                 <span className="error-message">{errMsg}</span>
                 <TextField
-                    id="title"
                     name="title"
                     label="Title"
                     placeholder="Title"
@@ -85,7 +106,6 @@ function EditStickyNotePage() {
                     onChange={handleInput}
                 />
                 <TextField
-                    id="description"
                     name="description"
                     label="Description"
                     placeholder="Description"

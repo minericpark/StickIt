@@ -89,3 +89,8 @@ a.sticky-link {
 #landing-page {
     text-align: center;
 }
+
+#create-sticky-button {
+    text-align: right;
+    border: 0;
+}

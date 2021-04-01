@@ -55,6 +55,11 @@ function App() {
                     path="/edit/:board_id/:sticky_id"
                     component={EditStickyNotePage}
                 />
+                <Route
+                    exact
+                    path="/create/:board_id"
+                    component={EditStickyNotePage}
+                />
                 <Route exact path="/">
                     {userID ? <Redirect to="/dashboard" /> : <LandingPage />}
                 </Route>

@@ -1,7 +1,7 @@
 import { Button, Grid, Paper } from '@material-ui/core';
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
-import { Redirect, useParams } from 'react-router-dom';
+import { Link, Redirect, useParams } from 'react-router-dom';
 import { UserContext } from '../context/user_context';
 import StickyNote from './sticky_note';
 
@@ -47,7 +47,7 @@ function StickyBoardPage() {
                         board_id: board_id,
                         sticky_id: 'sticky_1',
                         title: 'First Sticky Note',
-                        description: 'A basic sticky note without a due date',
+                        desc: 'A basic sticky note without a due date',
                         type: 0,
                         colour: 'yellow',
                     },
@@ -55,7 +55,7 @@ function StickyBoardPage() {
                         board_id: board_id,
                         sticky_id: 'sticky_2',
                         title: 'Advanced Sticky',
-                        description: 'An advanced sticky note with a due date',
+                        desc: 'An advanced sticky note with a due date',
                         type: 1,
                         due_date: '10/10/10',
                         colour: 'blue',
@@ -64,7 +64,7 @@ function StickyBoardPage() {
                         board_id: board_id,
                         sticky_id: 'sticky_3',
                         title: 'Green Sticky Note',
-                        description: 'A basic sticky note that is green',
+                        desc: 'A basic sticky note that is green',
                         type: 0,
                         colour: 'green',
                     },
@@ -80,6 +80,13 @@ function StickyBoardPage() {
         <div id="sticky-board" className="page">
             <Paper>
                 <h1 className="title">{title}</h1>
+                <div id="create-sticky-button">
+                    <Link className="button-link" to={`/create/${board_id}`}>
+                        <Button color="primary" variant="outlined">
+                            +
+                        </Button>
+                    </Link>
+                </div>
                 <Grid
                     className="grid"
                     container
@@ -94,7 +101,7 @@ function StickyBoardPage() {
                             board_id={sticky.board_id}
                             sticky_id={sticky.sticky_id}
                             title={sticky.title}
-                            description={sticky.description}
+                            description={sticky.desc}
                             advanced={sticky.type}
                             dueDate={sticky.due_date}
                             colour={sticky.colour}

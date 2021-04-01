@@ -37,18 +37,18 @@ function CreateAccountPage() {
 
         // First Send login request, if failed then create new profile
         axios
-            .get('/accounts/login', {
-                params: { email: email, password: password },
+            .get('/accounts/verify', {
+                params: { email: email },
             })
             .then((res) => {
-                success = res.status === 200;
+                success = false;
                 console.log('account already exists');
-                //login(email);
+                alert('Account with already exists')
             })
-            .catch(() => {
+            .catch(async() => {
                 console.log('account does not exist');
 
-                axios
+                await axios
                     .post('/profiles/create', {
                         user_id: email,
                         first_name: fname,
@@ -62,7 +62,7 @@ function CreateAccountPage() {
                         success = false;
                     });
 
-                axios
+                await axios
                     .post('/accounts/createUser', {
                         user_id: email,
                         password: password,

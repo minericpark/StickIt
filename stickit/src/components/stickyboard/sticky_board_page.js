@@ -8,7 +8,7 @@ import StickyNote from './sticky_note';
 function StickyBoardPage() {
     const { board_id } = useParams();
     const { userID } = useContext(UserContext);
-    const [title, setTitle] = useState(board_id);
+    const [title, setTitle] = useState('');
     const [stickyNotes, setStickies] = useState([]);
 
     // Fetch information about the sticky board on load
@@ -27,12 +27,10 @@ function StickyBoardPage() {
                 } else {
                     console.log(err.message);
                 }
-
-                setTitle('Test Board');
             })
             .then(() => axios.get(`/sticky/${userID}/${board_id}`))
             .then((res) => {
-                setStickies(res.data);
+                return res.data;
             })
             .catch((err) => {
                 // failed to find sticky notes
@@ -42,7 +40,10 @@ function StickyBoardPage() {
                     console.log(err.message);
                 }
 
-                setStickies([]);
+                return [];
+            })
+            .then((stickies) => {
+                setStickies(stickies);
             });
     }, [userID, board_id]);
 

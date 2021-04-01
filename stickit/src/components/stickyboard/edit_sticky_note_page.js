@@ -1,6 +1,6 @@
 import { Button, Select, TextField } from '@material-ui/core';
 import axios from 'axios';
-import { useContext, useEffect, useState } from 'react';
+import { Fragment, useContext, useEffect, useState } from 'react';
 import { Redirect, useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../context/user_context';
@@ -50,6 +50,30 @@ function EditStickyNotePage() {
                     due_date: dueDate,
                 })
                 .then(() => {
+                    toggleSaved(true);
+                })
+                .catch((err) => {
+                    if (err.response.data.msg) {
+                        setError(err.response.data.msg);
+                    } else {
+                        setError(err.message);
+                    }
+                });
+        }
+    }
+
+    function handleDelete() {
+        if (
+            window.confirm(
+                'Are you sure you would like to delete this sticky note?'
+            )
+        ) {
+            axios
+                .delete(`/sticky/delete/${userID}/${board_id}/${sticky_id}`)
+                .then((res) => {
+                    if (res.status === 200) {
+                        console.log(res.data.msg);
+                    }
                     toggleSaved(true);
                 })
                 .catch((err) => {
@@ -154,7 +178,6 @@ function EditStickyNotePage() {
                     value={description}
                     onChange={handleInput}
                 />
-
                 {template > 0 ? (
                     <TextField
                         name="dueDate"
@@ -168,15 +191,29 @@ function EditStickyNotePage() {
                         InputLabelProps={{ shrink: true }}
                     />
                 ) : null}
-
-                <Link className="button-link" to={`/board/${board_id}`}>
-                    <Button color="primary" variant="outlined">
-                        Cancel
+                <div>
+                    <Link className="button-link" to={`/board/${board_id}`}>
+                        <Button color="primary" variant="outlined">
+                            Cancel
+                        </Button>
+                    </Link>
+                    <Button type="submit" color="primary" variant="contained">
+                        Save
                     </Button>
-                </Link>
-                <Button type="submit" color="primary" variant="contained">
-                    Save
-                </Button>
+                </div>
+                {sticky_id ? (
+                    <Fragment>
+                        <br />
+                        <Button
+                            color="secondary"
+                            variant="contained"
+                            size="small"
+                            onClick={handleDelete}
+                        >
+                            Delete
+                        </Button>
+                    </Fragment>
+                ) : null}
             </form>
         </div>
     );

@@ -18,28 +18,20 @@ function CreateBoardPage() {
      * @param {*} event - the submit event
      */
     function handleCreateBoard(event) {
-        let success = true;
-    
         event.preventDefault();
 
-        if (title === 0) {
-            success = false;
-        }
-
         // send (POST) newly created board to existing boards list
-            
 
         axios
             .post('/boards/:user_id', {
                 user_id: userID,
                 title: title
             })
-            .then((res) => {
+            .then(() => {
                 console.log('board created');
             })
-            .catch((res) => {
+            .catch(() => {
                 alert('Error - could not create new board');
-                success = false;
             });
             
         

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { UserContext } from './context/user_context';
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { Button, TextField, ButtonGroup } from '@material-ui/core';
 import axios from 'axios';
 
@@ -152,12 +152,23 @@ function CreateAccountPage() {
                     onChange={handleInput}
                     required={true}
                 />
-                <ButtonGroup size="small" variant="contained" disableElevation>
-                    {/* TODO: <Button color="default">Cancel</Button> */}
-                    <Button color="primary" type="submit">
-                        Create An Account
-                    </Button>
-                </ButtonGroup>
+
+                <span>
+                    <Link to="/" className="button-link">
+                        <Button color="primary" variant="outlined" size="small">
+                            Cancel
+                        </Button>
+                    </Link>
+
+                    <ButtonGroup size="small" variant="contained" disableElevation>
+                        <Button color="primary" type="submit">
+                            Submit
+                        </Button>
+                    </ButtonGroup>
+                </span>
+                <br></br>
+                <Link to="/login">Login</Link>
+                    
             </form>
         </div>
     );

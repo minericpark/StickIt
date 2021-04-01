@@ -10,6 +10,7 @@ import { UserContext } from './components/context/user_context';
 import DashboardPage from './components/dashboard/dashboard_page';
 import LoginPage from './components/login_page';
 import CreateAccountPage from './components/create_account_page';
+import CreateBoardPage from './components/create_board_page';
 import MenuBar from './components/menubar/menu_bar';
 import StickyBoardPage from './components/sticky_board_page';
 import LandingPage from './components/landing_page';
@@ -44,6 +45,7 @@ function App() {
                     component={CreateAccountPage}
                 />
                 <Route exact path="/login" component={LoginPage} />
+                <Route exact path="/create-board" component={CreateBoardPage} />
                 <Route
                     exact
                     path="/board/:board_id"

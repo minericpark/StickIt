@@ -12,8 +12,9 @@ import LoginPage from './components/login_page';
 import CreateAccountPage from './components/create_account_page';
 import CreateBoardPage from './components/create_board_page';
 import MenuBar from './components/menubar/menu_bar';
-import StickyBoardPage from './components/sticky_board_page';
+import StickyBoardPage from './components/stickyboard/sticky_board_page';
 import LandingPage from './components/landing_page';
+import EditStickyNotePage from './components/stickyboard/edit_sticky_note_page';
 
 function App() {
     const { userID } = useContext(UserContext);
@@ -50,6 +51,16 @@ function App() {
                     exact
                     path="/board/:board_id"
                     component={StickyBoardPage}
+                />
+                <Route
+                    exact
+                    path="/edit/:board_id/:sticky_id"
+                    component={EditStickyNotePage}
+                />
+                <Route
+                    exact
+                    path="/create/:board_id"
+                    component={EditStickyNotePage}
                 />
                 <Route exact path="/">
                     {userID ? <Redirect to="/dashboard" /> : <LandingPage />}

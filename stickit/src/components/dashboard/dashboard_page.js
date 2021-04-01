@@ -13,11 +13,9 @@ function DashboardPage() {
     // Fetch user's sticky boards
     useEffect(() => {
         if (userID === null) return;
-        console.log('fetching board info');
         axios
             .get(`/boards/${userID}`)
             .then((res) => {
-                console.log(res);
                 return res.data;
             })
             .catch((err) => {

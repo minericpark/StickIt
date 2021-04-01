@@ -1,4 +1,4 @@
-import { Button, TextField } from '@material-ui/core';
+import { Button, Select, TextField } from '@material-ui/core';
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import { Redirect, useParams } from 'react-router';
@@ -11,6 +11,9 @@ function EditStickyNotePage() {
 
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
+    const [template, setTemplate] = useState(0);
+    const [dueDate, setDueDate] = useState('');
+    const [saved, toggleSaved] = useState(false);
     const [errMsg, setError] = useState();
 
     function handleSubmit(e) {
@@ -21,7 +24,12 @@ function EditStickyNotePage() {
             axios
                 .patch(`/sticky/edit/${userID}/${board_id}/${sticky_id}`, {
                     title: title,
-                    description: description,
+                    desc: description,
+                    type: template,
+                    due_date: dueDate,
+                })
+                .then(() => {
+                    toggleSaved(true);
                 })
                 .catch((err) => {
                     if (err.response.data.msg) {
@@ -38,9 +46,11 @@ function EditStickyNotePage() {
                     user_id: userID,
                     title: title,
                     desc: description,
-                    // TODO: add a field for these values
-                    type: 0,
-                    due_date: null,
+                    type: template,
+                    due_date: dueDate,
+                })
+                .then(() => {
+                    toggleSaved(true);
                 })
                 .catch((err) => {
                     if (err.response.data.msg) {
@@ -60,6 +70,11 @@ function EditStickyNotePage() {
             setTitle(value);
         } else if (name === 'description') {
             setDescription(value);
+        } else if (name === 'template') {
+            console.log('template', value);
+            setTemplate(value);
+        } else if (name === 'dueDate') {
+            setDueDate(value);
         }
     }
 
@@ -73,6 +88,11 @@ function EditStickyNotePage() {
             .then((res) => {
                 setTitle(res.data.title);
                 setDescription(res.data.desc);
+                setTemplate(res.data.type);
+
+                if (res.data.type) {
+                    setDueDate(res.data.due_date);
+                }
                 setError('');
             })
             .catch((err) => {
@@ -91,6 +111,10 @@ function EditStickyNotePage() {
         return <Redirect to="/" />;
     }
 
+    if (saved) {
+        return <Redirect to={`/board/${board_id}`} />;
+    }
+
     return (
         <div id="edit-sticky-page" className="page">
             <h1 className="title">
@@ -101,21 +125,51 @@ function EditStickyNotePage() {
                 <TextField
                     name="title"
                     label="Title"
-                    placeholder="Title"
+                    size="small"
+                    margin="dense"
+                    variant="outlined"
                     value={title}
                     onChange={handleInput}
                 />
+                <Select
+                    native
+                    name="template"
+                    size="small"
+                    margin="dense"
+                    variant="outlined"
+                    value={template}
+                    onChange={handleInput}
+                >
+                    <option value={0}>Basic Sticky Note</option>
+                    <option value={1}>Advanced Sticky Note</option>
+                </Select>
                 <TextField
                     name="description"
                     label="Description"
-                    placeholder="Description"
+                    size="small"
+                    margin="dense"
+                    variant="outlined"
                     multiline
                     rows={4}
                     value={description}
                     onChange={handleInput}
                 />
 
-                <Link className="sticky-link" to={`/board/${board_id}`}>
+                {template > 0 ? (
+                    <TextField
+                        name="dueDate"
+                        label="Due Date"
+                        type="date"
+                        size="small"
+                        margin="dense"
+                        variant="outlined"
+                        value={dueDate}
+                        onChange={handleInput}
+                        InputLabelProps={{ shrink: true }}
+                    />
+                ) : null}
+
+                <Link className="button-link" to={`/board/${board_id}`}>
                     <Button color="primary" variant="outlined">
                         Cancel
                     </Button>

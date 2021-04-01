@@ -42,33 +42,7 @@ function StickyBoardPage() {
                     console.log(err.message);
                 }
 
-                setStickies([
-                    {
-                        board_id: board_id,
-                        sticky_id: 'sticky_1',
-                        title: 'First Sticky Note',
-                        desc: 'A basic sticky note without a due date',
-                        type: 0,
-                        colour: 'yellow',
-                    },
-                    {
-                        board_id: board_id,
-                        sticky_id: 'sticky_2',
-                        title: 'Advanced Sticky',
-                        desc: 'An advanced sticky note with a due date',
-                        type: 1,
-                        due_date: '10/10/10',
-                        colour: 'blue',
-                    },
-                    {
-                        board_id: board_id,
-                        sticky_id: 'sticky_3',
-                        title: 'Green Sticky Note',
-                        desc: 'A basic sticky note that is green',
-                        type: 0,
-                        colour: 'green',
-                    },
-                ]);
+                setStickies([]);
             });
     }, [userID, board_id]);
 
@@ -82,7 +56,7 @@ function StickyBoardPage() {
                 <h1 className="title">{title}</h1>
                 <div id="create-sticky-button">
                     <Link className="button-link" to={`/create/${board_id}`}>
-                        <Button color="primary" variant="outlined">
+                        <Button color="primary" variant="contained">
                             +
                         </Button>
                     </Link>

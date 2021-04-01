@@ -19,6 +19,7 @@
 .sticky-board-card {
     padding: 5px;
     text-align: center;
+    border: 2px solid black;
 }
 .sticky-board-card.disabled {
     background-color: lightgray;
@@ -70,6 +71,7 @@
     padding: 0 15px 15px 15px;
     text-align: center;
 }
+
 #edit-sticky-form {
     margin: auto;
     max-width: 200px;

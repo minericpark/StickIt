@@ -8,8 +8,12 @@ function CreateBoardPage() {
     const { userID } = useContext(UserContext);
 
     const [title, setTitle] = useState('');
+    const [state, setState] = useState(false);
 
     if (userID === null) {
+        return <Redirect to="/" />;
+    }
+    if (state) {
         return <Redirect to="/" />;
     }
 
@@ -27,15 +31,14 @@ function CreateBoardPage() {
                 user_id: userID,
                 title: title
             })
-            .then(() => {
+            .then((res) => {
                 console.log('board created');
+                setState(true);
+                console.log(res.status);
             })
             .catch(() => {
                 alert('Error - could not create new board');
-            });
-            
-        
-            
+            });  
     }
 
     /** Handle input from text fields and do some simple validation.
@@ -46,26 +49,12 @@ function CreateBoardPage() {
         let name = event.target.name;
         let value = event.target.value;
 
-        //setBoardId("27");
-
         if (name === 'title') {
             if (value.trim() !== '') {
                 console.log(value);
                 setTitle(value);
             }
         }
-
-        // } else if (name === 'description') {
-        //     if (value.trim() !== '') {
-        //         setDescription(value);
-        //     }
-        // } else if (name === 'categories') {
-        //     if (value.trim() !== '') {
-        //         setCategories(value);
-        //     }
-        //   }
-
-        
     }
     return (
         <div id="create_board_page" className="create-board-page">
@@ -81,24 +70,6 @@ function CreateBoardPage() {
                     onChange={handleInput}
                     required={true}
                 />
-                {/* <TextField
-                    label="Description"
-                    name="description"
-                    type="text"
-                    size="small"
-                    margin="dense"
-                    variant="outlined"
-                    onChange={handleInput}
-                />
-                <TextField
-                    label="Categories"
-                    name="categories"
-                    type="text"
-                    size="small"
-                    margin="dense"
-                    variant="outlined"
-                    onChange={handleInput}
-                /> */}
 
                 <div>
                     <Link to="/" className="button-link">

@@ -25,8 +25,8 @@ function App() {
             pageRoute: '/dashboard',
         },
         {
-            pageName: 'Test',
-            pageRoute: '/test',
+            pageName: 'Create New Board',
+            pageRoute: '/create-board',
         },
     ];
 

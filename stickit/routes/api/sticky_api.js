@@ -59,7 +59,8 @@ router.post('/create', (req, res) => {
         title: req.body.title,
         type: req.body.type,
         desc: req.body.desc,
-        due_date: req.body.due_date
+        due_date: req.body.due_date,
+        colour: req.body.colour
     };
 
     if (!sticky_note.title || !sticky_note.desc || sticky_note.type === null) {

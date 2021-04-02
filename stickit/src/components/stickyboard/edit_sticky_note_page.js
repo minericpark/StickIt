@@ -13,6 +13,7 @@ function EditStickyNotePage() {
     const [description, setDescription] = useState('');
     const [template, setTemplate] = useState(0);
     const [dueDate, setDueDate] = useState('');
+    const [colour, setColour] = useState('yellow');
     const [saved, toggleSaved] = useState(false);
     const [errMsg, setError] = useState();
 
@@ -27,6 +28,7 @@ function EditStickyNotePage() {
                     desc: description,
                     type: template,
                     due_date: dueDate,
+                    colour: colour,
                 })
                 .then(() => {
                     toggleSaved(true);
@@ -99,6 +101,8 @@ function EditStickyNotePage() {
             setTemplate(value);
         } else if (name === 'dueDate') {
             setDueDate(value);
+        } else if (name === 'colour') {
+            setColour(value);
         }
     }
 
@@ -116,6 +120,9 @@ function EditStickyNotePage() {
 
                 if (res.data.type) {
                     setDueDate(res.data.due_date);
+                }
+                if (res.data.colour) {
+                    setColour(res.data.colour);
                 }
                 setError('');
             })
@@ -166,6 +173,19 @@ function EditStickyNotePage() {
                 >
                     <option value={0}>Basic Sticky Note</option>
                     <option value={1}>Advanced Sticky Note</option>
+                </Select>
+                <Select
+                    native
+                    name="colour"
+                    size="small"
+                    margin="dense"
+                    variant="outlined"
+                    value={colour}
+                    onChange={handleInput}
+                >
+                    <option value={'yellow'}>Yellow</option>
+                    <option value={'blue'}>Blue</option>
+                    <option value={'green'}>Green</option>
                 </Select>
                 <TextField
                     name="description"

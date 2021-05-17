@@ -1,5 +1,5 @@
 ## StickIt
-![GitHub contributors](https://img.shields.io/github/contributors/minericpark/stickit) ![GitHub last commit](https://img.shields.io/github/last-commit/minericpark/stickit)
+![GitHub contributors](https://img.shields.io/github/contributors/minericpark/StickIt) ![GitHub last commit](https://img.shields.io/github/last-commit/minericpark/StickIt)
 
 A web application developed for students who like to keep their work organized. 
 
